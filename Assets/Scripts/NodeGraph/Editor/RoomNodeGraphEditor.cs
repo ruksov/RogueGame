@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -13,6 +12,9 @@ namespace Rogue.NodeGraph.Editor
 
     private static RoomNodeGraph ms_graph;
     private static GUIStyle ms_nodeStyle;
+
+    private static Node ms_selectedNode;
+    private static Vector2 ms_nodeDragOffset;
 
     [MenuItem("Room Node Graph Editor", menuItem = "Tools/Room Node Graph Editor")]
     private static void OpenWindow()
@@ -37,8 +39,11 @@ namespace Rogue.NodeGraph.Editor
         CreateNodeStyle();
     }
 
-    private void OnDestroy() => 
+    private void OnDestroy()
+    {
+      SaveGraph();
       ms_graph = null;
+    }
 
     private void OnGUI()
     {
@@ -66,7 +71,15 @@ namespace Rogue.NodeGraph.Editor
       switch (currentEvent.type)
       {
         case EventType.MouseDown:
-          ProcessMouseEvent(currentEvent);
+          ProcessMouseDownEvent(currentEvent);
+          break;
+        
+        case EventType.MouseUp:
+          ProcessMouseUpEvent(currentEvent);
+          break;
+        
+        case EventType.MouseDrag:
+          ProcessMouseDragEvent(currentEvent);
           break;
       }
     }
@@ -75,34 +88,88 @@ namespace Rogue.NodeGraph.Editor
     {
       foreach (Node node in ms_graph.Nodes)
         node.Draw(ms_nodeStyle);
-
-      GUI.changed = true;
     }
 
-    private static void ProcessMouseEvent(Event currentEvent)
+    private static void ProcessMouseDownEvent(Event currentEvent)
     {
-      if(currentEvent.button == 1)
+      switch (currentEvent.button)
+      {
+        case 0:
+          ProcessLeftMouseDown(currentEvent.mousePosition);
+          break;
+        
+        case 1:
+          ProcessRightMouseDown(currentEvent);
+          break;
+      }
+    }
+
+    private static void ProcessLeftMouseDown(Vector2 mousePosition)
+    {
+      ms_selectedNode = GetHoveredNode(mousePosition);
+      
+      if(ms_selectedNode != null)
+        ms_nodeDragOffset = ms_selectedNode.Transform.position - mousePosition;
+    }
+
+    private static void ProcessRightMouseDown(Event currentEvent)
+    {
+      if(!IsNodeHovered(currentEvent.mousePosition))
         ShowContextMenu(currentEvent.mousePosition);
     }
+
+    private static void ProcessMouseUpEvent(Event currentEvent)
+    {
+      if(currentEvent.button == 0)
+        ProcessLeftMouseUpEvent();
+    }
+
+    private static void ProcessLeftMouseUpEvent()
+    {
+      ms_selectedNode = null;
+    }
+
+    private static void ProcessMouseDragEvent(Event currentEvent)
+    {
+      if(ms_selectedNode != null)
+        DragNode(currentEvent);
+    }
+
+    private static Node GetHoveredNode(Vector2 mousePosition) => 
+      ms_graph.Nodes.Find(node => node.Transform.Contains(mousePosition));
+
+    private static bool IsNodeHovered(Vector2 mousePosition) => 
+      GetHoveredNode(mousePosition) != null;
 
     private static void ShowContextMenu(Vector2 mousePosition)
     {
       var contextMenu = new GenericMenu();
+      
       contextMenu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
       contextMenu.AddItem(new GUIContent("Delete All Nodes"), false, DeleteAllNodes);
+      
       contextMenu.ShowAsContext();
     }
 
     private static void CreateRoomNode(object mousePositionObj)
     {
       var mousePosition = (Vector2) mousePositionObj;
-
       ms_graph.Nodes.Add(new Node(new Rect(mousePosition, ms_nodeSize)));
-      
-      AssetDatabase.SaveAssets();
     }
 
     private static void DeleteAllNodes() => 
       ms_graph.Nodes.Clear();
+
+    private static void DragNode(Event currentEvent)
+    {
+      ms_selectedNode.Transform.position = currentEvent.mousePosition + ms_nodeDragOffset;
+      GUI.changed = true;
+    }
+
+    private static void SaveGraph()
+    {
+      EditorUtility.SetDirty(ms_graph);
+      AssetDatabase.SaveAssetIfDirty(ms_graph);
+    }
   }
 }

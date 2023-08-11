@@ -12,4 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b920d3658444065bdcfc5211899ad0c, type: 3}
   m_Name: RoomNodeGraph_1
   m_EditorClassIdentifier: 
-  Nodes: []
+  Nodes:
+  - Type: 2
+    Transform:
+      serializedVersion: 2
+      x: 138
+      y: 270
+      width: 160
+      height: 75
+  - Type: 3
+    Transform:
+      serializedVersion: 2
+      x: 671
+      y: 135
+      width: 160
+      height: 75
+  - Type: 5
+    Transform:
+      serializedVersion: 2
+      x: 859
+      y: 286
+      width: 160
+      height: 75

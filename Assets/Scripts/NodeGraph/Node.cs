@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Rogue.NodeGraph
 {
@@ -8,9 +9,7 @@ namespace Rogue.NodeGraph
   public class Node
   {
     public NodeType Type;
-
-    [SerializeField]
-    private Rect m_transform;
+    public Rect Transform;
 
     public Node(Rect transform) 
       : this(NodeType.None, transform)
@@ -20,18 +19,18 @@ namespace Rogue.NodeGraph
     public Node(NodeType type, Rect transform) 
     {
       Type = type;
-      m_transform = transform;
+      Transform = transform;
     }
 
     public void Draw(GUIStyle style)
     {
-      GUILayout.BeginArea(m_transform, style);
+      GUILayout.BeginArea(Transform, style);
       var type = (NodeType) EditorGUILayout.EnumPopup(Type);
+
+      GUILayout.EndArea();
 
       if(Type != type)
         Type = type;
-      
-      GUILayout.EndArea();
     }
   }
 }
