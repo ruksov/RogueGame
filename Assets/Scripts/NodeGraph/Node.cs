@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Rogue.NodeGraph
 {
   [Serializable]
   public class Node
   {
+    public string Id;
     public NodeType Type;
     public Rect Transform;
+    public List<string> Links = new();
 
     public Node(Rect transform) 
       : this(NodeType.None, transform)
     {
     }
     
-    public Node(NodeType type, Rect transform) 
+    public Node(NodeType type, Rect transform)
     {
+      Id = Guid.NewGuid().ToString();
       Type = type;
       Transform = transform;
     }
