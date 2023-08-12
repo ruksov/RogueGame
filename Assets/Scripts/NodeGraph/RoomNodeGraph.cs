@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace Rogue.NodeGraph
 {
-  [CreateAssetMenu(fileName = "RoomNodeGraph_", menuName = "Rogue/RoomNodeGraph/Graph", order = 0)]
+  [CreateAssetMenu(fileName = "RoomNodeGraph_", menuName = "Rogue/RoomNodeGraph/Graph")]
   public class RoomNodeGraph : ScriptableObject, ISerializationCallbackReceiver
   {
     public List<Node> Nodes = new();
-    public List<NodeLink> Links = new();
-    
-    public readonly Dictionary<string, Node> IdToNode = new();
+    public readonly Dictionary<string, Node> IDToNode = new();
     
 #if UNITY_EDITOR
     
@@ -21,10 +19,15 @@ namespace Rogue.NodeGraph
 
 #endif
 
+    public void AddNode(Node node)
+    {
+      Nodes.Add(node);
+      IDToNode[node.Id] = node;
+    }    
+    
     public void DeleteAllNodes()
     {
-      Links.Clear();
-      IdToNode.Clear();
+      IDToNode.Clear();
       Nodes.Clear();
     }
     
@@ -35,7 +38,7 @@ namespace Rogue.NodeGraph
     public void OnAfterDeserialize()
     {
       foreach (Node node in Nodes) 
-        IdToNode[node.Id] = node;
+        IDToNode[node.Id] = node;
     }
   }
 }

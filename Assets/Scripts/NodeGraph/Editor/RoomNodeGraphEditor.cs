@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -11,6 +10,11 @@ namespace Rogue.NodeGraph.Editor
     private const int mk_nodePadding = 25;
     private const int mk_nodeBorder = 12;
 
+    private const int mk_linkThickness = 2;
+    private const float mk_arrowLength = 20;
+    private const int mk_arrowAngle = 30;
+    private const int mk_arrowThickness = 1;
+
     private static RoomNodeGraph ms_graph;
     private static GUIStyle ms_nodeStyle;
 
@@ -19,6 +23,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static Node ms_dragLinkStartNode;
     private static Vector2 ms_dragLinkEndPosition;
+
 
     [MenuItem("Room Node Graph Editor", menuItem = "Tools/Room Node Graph Editor")]
     private static void OpenWindow()
@@ -45,7 +50,9 @@ namespace Rogue.NodeGraph.Editor
 
     private void OnDestroy()
     {
-      SaveGraph();
+      if(ms_graph)
+        SaveGraph();
+      
       ms_graph = null;
     }
 
@@ -87,8 +94,30 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DrawLinks()
     {
-      foreach (NodeLink link in ms_graph.Links)
-        Handles.DrawLine(link.First.Transform.center, link.Second.Transform.center);
+      foreach (Node node in ms_graph.Nodes)
+      {
+        foreach (string childId in node.ChildIds)
+          DrawLink(node, ms_graph.IDToNode[childId]);
+      }
+    }
+
+    private static void DrawLink(Node parent, Node child)
+    {
+      DrawLine(parent.Transform.center, child.Transform.center);
+      DrawLinkArrow(parent.Transform.center, child.Transform.center);
+    }
+
+    private static void DrawLinkArrow(Vector2 parentCenter, Vector2 childCenter)
+    {
+      float distance = Vector2.Distance(parentCenter, childCenter);
+
+      Vector2 linkDir = (parentCenter - childCenter).normalized;
+      Vector2 leftArrowDir = Quaternion.AngleAxis(mk_arrowAngle, Vector3.forward) * linkDir;
+      Vector2 rightArrowDir = Quaternion.AngleAxis(-mk_arrowAngle, Vector3.forward) * linkDir;
+
+      Vector2 linkCenter = childCenter + linkDir * (distance / 2);
+      DrawLine(linkCenter, linkCenter + leftArrowDir * mk_arrowLength);
+      DrawLine(linkCenter, linkCenter + rightArrowDir * mk_arrowLength);
     }
 
     private static void DrawNodes()
@@ -191,8 +220,7 @@ namespace Rogue.NodeGraph.Editor
       var mousePosition = (Vector2) mousePositionObj;
       var node = new Node(new Rect(mousePosition, ms_nodeSize));
       
-      ms_graph.Nodes.Add(node);
-      ms_graph.IdToNode[node.Id] = node;
+      ms_graph.AddNode(node);
     }
 
     private static void DeleteAllNodes()
@@ -202,16 +230,10 @@ namespace Rogue.NodeGraph.Editor
 
     private static void CreateLink(Node linkStartNode, Node linkEndNode)
     {
-      if (linkStartNode.Id == linkEndNode.Id ||
-          linkStartNode.Links.Any(id => id == linkEndNode.Id))
-        return;
-      
-      linkStartNode.Links.Add(linkEndNode.Id);
-      linkEndNode.Links.Add(linkStartNode.Id);
-      
-      ms_graph.Links.Add(new NodeLink(linkStartNode, linkEndNode));
+      if(linkStartNode.CanAddChild(linkEndNode))
+        linkStartNode.AddChild(linkEndNode);
     }
-    
+
     private static void DragNode(Event currentEvent)
     {
       ms_selectedNode.Transform.position = currentEvent.mousePosition + ms_nodeDragOffset;
@@ -229,5 +251,8 @@ namespace Rogue.NodeGraph.Editor
       EditorUtility.SetDirty(ms_graph);
       AssetDatabase.SaveAssetIfDirty(ms_graph);
     }
+
+    private static void DrawLine(Vector2 start, Vector2 end) =>
+      Handles.DrawBezier(start, end, start, end, Color.white, null, mk_linkThickness);
   }
 }

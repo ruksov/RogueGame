@@ -11,7 +11,8 @@ namespace Rogue.NodeGraph
     public string Id;
     public NodeType Type;
     public Rect Transform;
-    public List<string> Links = new();
+    public List<string> ParentIds = new();
+    public List<string> ChildIds = new();
 
     public Node(Rect transform) 
       : this(NodeType.None, transform)
@@ -25,11 +26,25 @@ namespace Rogue.NodeGraph
       Transform = transform;
     }
 
+    public bool CanAddChild(Node child)
+    {
+      return Id != child.Id &&
+             !ChildIds.Contains(child.Id) &&
+             !ParentIds.Contains(child.Id);
+    }
+
+    public void AddChild(Node child)
+    {
+      ChildIds.Add(child.Id);
+      child.ParentIds.Add(child.Id);
+    }
+
     public void Draw(GUIStyle style)
     {
       GUILayout.BeginArea(Transform, style);
+      
       var type = (NodeType) EditorGUILayout.EnumPopup(Type);
-
+      
       GUILayout.EndArea();
 
       if(Type != type)
