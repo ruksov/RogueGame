@@ -17,45 +17,69 @@ MonoBehaviour:
     Type: 7
     ParentIds: []
     ChildIds:
-    - eb385eaf-255e-4076-93ec-186a015e5746
+    - a96a69bb-915a-4233-ba05-f3c44ab0b06d
     Transform:
       serializedVersion: 2
-      x: -17
-      y: 234
-      width: 160
-      height: 75
-  - Id: eb385eaf-255e-4076-93ec-186a015e5746
-    Type: 1
-    ParentIds:
-    - 8b7ad519-1437-4acd-b8ef-1adbf8fa5bd8
-    ChildIds:
-    - 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
-    Transform:
-      serializedVersion: 2
-      x: 286
-      y: 221
+      x: 131
+      y: 212
       width: 160
       height: 75
   - Id: a96a69bb-915a-4233-ba05-f3c44ab0b06d
     Type: 1
     ParentIds:
-    - 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
+    - 8b7ad519-1437-4acd-b8ef-1adbf8fa5bd8
+    ChildIds:
+    - fbe02474-24bc-44e1-9480-5071590c9dd0
+    Transform:
+      serializedVersion: 2
+      x: 427
+      y: 218
+      width: 160
+      height: 75
+  - Id: fbe02474-24bc-44e1-9480-5071590c9dd0
+    Type: 3
+    ParentIds:
+    - a96a69bb-915a-4233-ba05-f3c44ab0b06d
+    ChildIds:
+    - 9ce6df8b-dbf8-4f01-bc5a-da82f3d84366
+    Transform:
+      serializedVersion: 2
+      x: 698
+      y: 221
+      width: 160
+      height: 75
+  - Id: 9ce6df8b-dbf8-4f01-bc5a-da82f3d84366
+    Type: 1
+    ParentIds:
+    - fbe02474-24bc-44e1-9480-5071590c9dd0
+    ChildIds:
+    - b5567562-0855-47f1-a429-952b90171e42
+    Transform:
+      serializedVersion: 2
+      x: 768
+      y: 378
+      width: 160
+      height: 75
+  - Id: b5567562-0855-47f1-a429-952b90171e42
+    Type: 4
+    ParentIds:
+    - 9ce6df8b-dbf8-4f01-bc5a-da82f3d84366
+    ChildIds:
+    - 2c29e7cd-d8b5-4e2b-9039-4b37632b824e
+    Transform:
+      serializedVersion: 2
+      x: 1108
+      y: 389
+      width: 160
+      height: 75
+  - Id: 2c29e7cd-d8b5-4e2b-9039-4b37632b824e
+    Type: 1
+    ParentIds:
+    - b5567562-0855-47f1-a429-952b90171e42
     ChildIds: []
     Transform:
       serializedVersion: 2
-      x: 412
-      y: 508
-      width: 160
-      height: 75
-  - Id: 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
-    Type: 3
-    ParentIds:
-    - eb385eaf-255e-4076-93ec-186a015e5746
-    ChildIds:
-    - a96a69bb-915a-4233-ba05-f3c44ab0b06d
-    Transform:
-      serializedVersion: 2
-      x: 687
-      y: 282
+      x: 1061
+      y: 220
       width: 160
       height: 75

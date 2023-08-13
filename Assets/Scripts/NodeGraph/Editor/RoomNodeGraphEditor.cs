@@ -184,8 +184,11 @@ namespace Rogue.NodeGraph.Editor
 
     private static void ProcessMouseDragEvent(Event currentEvent)
     {
-      if(currentEvent.button == 0)
+      if (currentEvent.button == 0)
+      {
         DragNode(currentEvent);
+        DragGraph(currentEvent);
+      }
       else if (currentEvent.button == 1)
         DragLink(currentEvent);
     }
@@ -308,7 +311,7 @@ namespace Rogue.NodeGraph.Editor
       if(linkStartNode.CanAddChild(linkEndNode))
         linkStartNode.AddChild(linkEndNode);
     }
-    
+
     private static void StartDragNode(Vector2 mousePosition)
     {
       ms_dragNode.IsSelected = !ms_dragNode.IsSelected;
@@ -316,13 +319,24 @@ namespace Rogue.NodeGraph.Editor
 
       GUI.changed = true;
     }
-    
+
     private static void DragNode(Event currentEvent)
     {
       if (ms_dragNode == null)
         return;
       
       ms_dragNode.Transform.position = currentEvent.mousePosition + ms_dragNodeOffset;
+      GUI.changed = true;
+    }
+
+    private static void DragGraph(Event currentEvent)
+    {
+      if (ms_graph.IsNodeHovered(currentEvent.mousePosition))
+        return;
+      
+      foreach (Node node in ms_graph.Nodes) 
+        node.Transform.position += currentEvent.delta;
+
       GUI.changed = true;
     }
 
