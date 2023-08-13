@@ -7,7 +7,7 @@ namespace Rogue.NodeGraph
   public class RoomNodeGraph : ScriptableObject, ISerializationCallbackReceiver
   {
     public List<Node> Nodes = new();
-    public readonly Dictionary<string, Node> IDToNode = new();
+    public readonly Dictionary<string, Node> IdToNode = new();
     
 #if UNITY_EDITOR
     
@@ -22,12 +22,12 @@ namespace Rogue.NodeGraph
     public void AddNode(Node node)
     {
       Nodes.Add(node);
-      IDToNode[node.Id] = node;
+      IdToNode[node.Id] = node;
     }    
     
     public void DeleteAllNodes()
     {
-      IDToNode.Clear();
+      IdToNode.Clear();
       Nodes.Clear();
     }
     
@@ -38,7 +38,7 @@ namespace Rogue.NodeGraph
     public void OnAfterDeserialize()
     {
       foreach (Node node in Nodes) 
-        IDToNode[node.Id] = node;
+        IdToNode[node.Id] = node;
     }
   }
 }

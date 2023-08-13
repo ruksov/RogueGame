@@ -8,6 +8,7 @@
     BossRoom,
     SmallRoom,
     MediumRoom,
-    LargeRoom
+    LargeRoom,
+    Entrance
   }
 }

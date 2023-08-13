@@ -12,4 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b920d3658444065bdcfc5211899ad0c, type: 3}
   m_Name: RoomNodeGraph_1
   m_EditorClassIdentifier: 
-  Nodes: []
+  Nodes:
+  - Id: 8b7ad519-1437-4acd-b8ef-1adbf8fa5bd8
+    Type: 7
+    ParentIds: []
+    ChildIds:
+    - eb385eaf-255e-4076-93ec-186a015e5746
+    Transform:
+      serializedVersion: 2
+      x: -17
+      y: 234
+      width: 160
+      height: 75
+  - Id: eb385eaf-255e-4076-93ec-186a015e5746
+    Type: 1
+    ParentIds:
+    - 8b7ad519-1437-4acd-b8ef-1adbf8fa5bd8
+    ChildIds:
+    - 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
+    Transform:
+      serializedVersion: 2
+      x: 286
+      y: 221
+      width: 160
+      height: 75
+  - Id: a96a69bb-915a-4233-ba05-f3c44ab0b06d
+    Type: 1
+    ParentIds:
+    - 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
+    ChildIds: []
+    Transform:
+      serializedVersion: 2
+      x: 412
+      y: 508
+      width: 160
+      height: 75
+  - Id: 163ff289-c7fc-4bfb-a8ec-3e21d8ace8eb
+    Type: 3
+    ParentIds:
+    - eb385eaf-255e-4076-93ec-186a015e5746
+    ChildIds:
+    - a96a69bb-915a-4233-ba05-f3c44ab0b06d
+    Transform:
+      serializedVersion: 2
+      x: 687
+      y: 282
+      width: 160
+      height: 75

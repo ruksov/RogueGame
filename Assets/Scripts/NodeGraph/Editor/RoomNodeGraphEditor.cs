@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Linq;
+using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -13,13 +15,13 @@ namespace Rogue.NodeGraph.Editor
     private const int mk_linkThickness = 2;
     private const float mk_arrowLength = 20;
     private const int mk_arrowAngle = 30;
-    private const int mk_arrowThickness = 1;
 
     private static RoomNodeGraph ms_graph;
     private static GUIStyle ms_nodeStyle;
+    private static GUIStyle ms_selectedNodeStyle;
 
-    private static Node ms_selectedNode;
-    private static Vector2 ms_nodeDragOffset;
+    private static Node ms_dragNode;
+    private static Vector2 ms_dragNodeOffset;
 
     private static Node ms_dragLinkStartNode;
     private static Vector2 ms_dragLinkEndPosition;
@@ -50,9 +52,12 @@ namespace Rogue.NodeGraph.Editor
 
     private void OnDestroy()
     {
-      if(ms_graph)
+      if (ms_graph)
+      {
+        ClearSelectedNodes();
         SaveGraph();
-      
+      }
+
       ms_graph = null;
     }
 
@@ -66,6 +71,12 @@ namespace Rogue.NodeGraph.Editor
       DrawDragLink();
       DrawLinks();
       DrawNodes();
+    }
+
+    private void ClearSelectedNodes()
+    {
+      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected)) 
+        node.IsSelected = false;
     }
 
     private static void ProcessEvent(Event currentEvent)
@@ -97,7 +108,7 @@ namespace Rogue.NodeGraph.Editor
       foreach (Node node in ms_graph.Nodes)
       {
         foreach (string childId in node.ChildIds)
-          DrawLink(node, ms_graph.IDToNode[childId]);
+          DrawLink(node, ms_graph.IdToNode[childId]);
       }
     }
 
@@ -123,7 +134,7 @@ namespace Rogue.NodeGraph.Editor
     private static void DrawNodes()
     {
       foreach (Node node in ms_graph.Nodes)
-        node.Draw(ms_nodeStyle);
+        node.Draw(node.IsSelected ? ms_selectedNodeStyle : ms_nodeStyle);
     }
 
     private static void ProcessMouseDownEvent(Event currentEvent)
@@ -136,10 +147,12 @@ namespace Rogue.NodeGraph.Editor
 
     private static void ProcessLeftMouseDown(Vector2 mousePosition)
     {
-      ms_selectedNode = ms_graph.GetHoveredNode(mousePosition);
-      
-      if(ms_selectedNode != null)
-        ms_nodeDragOffset = ms_selectedNode.Transform.position - mousePosition;
+      ms_dragNode = ms_graph.GetHoveredNode(mousePosition);
+
+      if (ms_dragNode != null)
+        StartDragNode(mousePosition);
+      else
+        DeselectAllNodes();
     }
 
     private static void ProcessRightMouseDown(Event currentEvent)
@@ -161,7 +174,7 @@ namespace Rogue.NodeGraph.Editor
     }
 
     private static void ProcessLeftMouseUpEvent() => 
-      ms_selectedNode = null;
+      ms_dragNode = null;
 
     private static void ProcessRightMouseUpEvent()
     {
@@ -174,7 +187,7 @@ namespace Rogue.NodeGraph.Editor
       if(currentEvent.button == 0)
         DragNode(currentEvent);
       else if (currentEvent.button == 1)
-        DragConnection(currentEvent);
+        DragLink(currentEvent);
     }
 
     private static void ShowContextMenu(Vector2 mousePosition)
@@ -182,9 +195,54 @@ namespace Rogue.NodeGraph.Editor
       var contextMenu = new GenericMenu();
       
       contextMenu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
+      contextMenu.AddSeparator("");
       contextMenu.AddItem(new GUIContent("Delete All Nodes"), false, DeleteAllNodes);
+      contextMenu.AddItem(new GUIContent("Delete Selected Nodes"), false, DeleteSelectedNodes);
+      contextMenu.AddItem(new GUIContent("Delete Selected Nodes Links"), false, DeleteSelectedNodesLinks);
       
       contextMenu.ShowAsContext();
+    }
+
+
+    private static void DeselectAllNodes()
+    {
+      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected))
+        node.IsSelected = false;
+
+      GUI.changed = true;
+    }
+
+    private static void DeleteSelectedNodes()
+    {
+      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected))
+      {
+        DeleteLinksFor(node);
+        ms_graph.IdToNode.Remove(node.Id);
+      }
+
+      ms_graph.Nodes.RemoveAll(node => node.IsSelected);
+
+      GUI.changed = true;
+    }
+
+    private static void DeleteSelectedNodesLinks()
+    {
+      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected)) 
+        DeleteLinksFor(node);
+
+      GUI.changed = true;
+    }
+
+    private static void DeleteLinksFor(Node node)
+    {
+      foreach (string parentId in node.ParentIds)
+        ms_graph.IdToNode[parentId].ChildIds.Remove(node.Id);
+
+      foreach (string childId in node.ChildIds)
+        ms_graph.IdToNode[childId].ParentIds.Remove(node.Id);
+
+      node.ParentIds.Clear();
+      node.ChildIds.Clear();
     }
 
     private static void StartDragLink(Node hoveredNode, Vector2 mousePosition)
@@ -213,13 +271,30 @@ namespace Rogue.NodeGraph.Editor
         padding = new RectOffset(mk_nodePadding, mk_nodePadding, mk_nodePadding, mk_nodePadding),
         border = new RectOffset(mk_nodeBorder, mk_nodeBorder, mk_nodeBorder, mk_nodeBorder)
       };
+      
+      ms_selectedNodeStyle = new GUIStyle {
+        normal = {
+          background = EditorGUIUtility.Load("node1 on") as Texture2D,
+          textColor = Color.white
+        },
+        padding = new RectOffset(mk_nodePadding, mk_nodePadding, mk_nodePadding, mk_nodePadding),
+        border = new RectOffset(mk_nodeBorder, mk_nodeBorder, mk_nodeBorder, mk_nodeBorder)
+      };
     }
 
     private static void CreateRoomNode(object mousePositionObj)
     {
       var mousePosition = (Vector2) mousePositionObj;
-      var node = new Node(new Rect(mousePosition, ms_nodeSize));
-      
+
+      if (ms_graph.Nodes.Count == 0) 
+        CreateRoomNode(NodeType.Entrance, mousePosition + Vector2.left * 300);
+
+      CreateRoomNode(NodeType.None, mousePosition);
+    }
+
+    private static void CreateRoomNode(NodeType type, Vector2 position)
+    {
+      var node = new Node(type, new Rect(position, ms_nodeSize));
       ms_graph.AddNode(node);
     }
 
@@ -233,15 +308,29 @@ namespace Rogue.NodeGraph.Editor
       if(linkStartNode.CanAddChild(linkEndNode))
         linkStartNode.AddChild(linkEndNode);
     }
+    
+    private static void StartDragNode(Vector2 mousePosition)
+    {
+      ms_dragNode.IsSelected = !ms_dragNode.IsSelected;
+      ms_dragNodeOffset = ms_dragNode.Transform.position - mousePosition;
 
+      GUI.changed = true;
+    }
+    
     private static void DragNode(Event currentEvent)
     {
-      ms_selectedNode.Transform.position = currentEvent.mousePosition + ms_nodeDragOffset;
+      if (ms_dragNode == null)
+        return;
+      
+      ms_dragNode.Transform.position = currentEvent.mousePosition + ms_dragNodeOffset;
       GUI.changed = true;
     }
 
-    private static void DragConnection(Event currentEvent)
+    private static void DragLink(Event currentEvent)
     {
+      if (ms_dragLinkStartNode == null)
+        return;
+      
       ms_dragLinkEndPosition += currentEvent.delta;
       GUI.changed = true;
     }
