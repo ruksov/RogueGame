@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 105527387}
   - component: {fileID: 105527388}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 333083502}
   - component: {fileID: 333083504}
   m_Layer: 8
-  m_Name: VirtualCamera
+  m_Name: Virtual_MainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
