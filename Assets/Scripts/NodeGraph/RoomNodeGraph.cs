@@ -6,7 +6,9 @@ namespace Rogue.NodeGraph
   [CreateAssetMenu(fileName = "RoomNodeGraph_", menuName = "Rogue/RoomNodeGraph/Graph")]
   public class RoomNodeGraph : ScriptableObject, ISerializationCallbackReceiver
   {
+    [HideInInspector]
     public List<Node> Nodes = new();
+    
     public readonly Dictionary<string, Node> IdToNode = new();
     
 #if UNITY_EDITOR

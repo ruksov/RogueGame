@@ -147,12 +147,17 @@ namespace Rogue.NodeGraph.Editor
 
     private static void ProcessLeftMouseDown(Vector2 mousePosition)
     {
-      ms_dragNode = ms_graph.GetHoveredNode(mousePosition);
-
-      if (ms_dragNode != null)
-        StartDragNode(mousePosition);
+      Node hoveredNode = ms_graph.GetHoveredNode(mousePosition);
+      
+      if(hoveredNode != null)
+      {
+        hoveredNode.IsSelected = !hoveredNode.IsSelected;
+        StartDragNode(hoveredNode, mousePosition);
+      }
       else
+      {
         DeselectAllNodes();
+      }
     }
 
     private static void ProcessRightMouseDown(Event currentEvent)
@@ -312,11 +317,11 @@ namespace Rogue.NodeGraph.Editor
         linkStartNode.AddChild(linkEndNode);
     }
 
-    private static void StartDragNode(Vector2 mousePosition)
+    private static void StartDragNode(Node hoveredNode, Vector2 mousePosition)
     {
-      ms_dragNode.IsSelected = !ms_dragNode.IsSelected;
+      ms_dragNode = hoveredNode;
       ms_dragNodeOffset = ms_dragNode.Transform.position - mousePosition;
-
+      
       GUI.changed = true;
     }
 
