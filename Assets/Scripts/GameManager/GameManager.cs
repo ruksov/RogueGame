@@ -1,29 +1,32 @@
-using System.Collections.Generic;
-using Misc;
+using Rogue.Settings;
 using UnityEngine;
+using VContainer.Unity;
 
 namespace GameManager
 {
-  [DisallowMultipleComponent]
-  public class GameManager : SingletonMonoBehaviour<GameManager>
+  public class GameManager : IStartable, ITickable
   {
-    public List<DungeonLevelSO> Levels;
-    public int CurrentLevelIndex = 0;
+    private readonly LevelBuilderSettings m_settings;
     
     [HideInInspector]
     public EGameState State = EGameState.None;
 
-    private void Start() => 
+    public GameManager(GameSettingsData settings)
+    {
+      m_settings = settings.LevelBuilder;
+    }
+
+    public void Start() => 
       State = EGameState.GameStarted;
 
-    private void Update()
+    public void Tick()
     {
       HandleGameStates();
 
       if (Input.GetKeyDown(KeyCode.R))
         State = EGameState.GameStarted;
     }
-
+      
     private void HandleGameStates()
     {
       switch (State)
@@ -32,7 +35,7 @@ namespace GameManager
           break;
         
         case EGameState.GameStarted:
-          PlayDungeonLevel(CurrentLevelIndex);
+          PlayDungeonLevel(m_settings.FirstLevelIndex);
           State = EGameState.PlayingLevel;
           break;
       }
@@ -40,6 +43,7 @@ namespace GameManager
 
     private void PlayDungeonLevel(int levelIndex)
     {
+      Debug.Log($"play level {m_settings.Levels[levelIndex].Name}");
     }
   }
 }
