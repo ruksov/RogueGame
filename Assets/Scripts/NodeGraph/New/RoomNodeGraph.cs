@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rogue.NodeGraph
@@ -6,10 +7,10 @@ namespace Rogue.NodeGraph
   [CreateAssetMenu(fileName = "RoomNodeGraph_", menuName = "Rogue/RoomNodeGraph/Graph")]
   public class RoomNodeGraph : ScriptableObject, ISerializationCallbackReceiver
   {
-    [HideInInspector]
+    //[HideInInspector]
     public List<Node> Nodes = new();
     
-    public readonly Dictionary<string, Node> IdToNode = new();
+    public readonly Dictionary<Guid, Node> IdToNode = new();
     
 #if UNITY_EDITOR
     

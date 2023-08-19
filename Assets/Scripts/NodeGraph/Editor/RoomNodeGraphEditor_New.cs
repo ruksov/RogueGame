@@ -107,7 +107,7 @@ namespace Rogue.NodeGraph.Editor
     {
       foreach (Node node in ms_graph.Nodes)
       {
-        foreach (string childId in node.ChildIds)
+        foreach (Guid childId in node.ChildIds)
           DrawLink(node, ms_graph.IdToNode[childId]);
       }
     }
@@ -243,10 +243,10 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DeleteLinksFor(Node node)
     {
-      foreach (string parentId in node.ParentIds)
+      foreach (Guid parentId in node.ParentIds)
         ms_graph.IdToNode[parentId].ChildIds.Remove(node.Id);
 
-      foreach (string childId in node.ChildIds)
+      foreach (Guid childId in node.ChildIds)
         ms_graph.IdToNode[childId].ParentIds.Remove(node.Id);
 
       node.ParentIds.Clear();

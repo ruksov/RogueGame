@@ -10,10 +10,10 @@ namespace Rogue.NodeGraph
   {
     private const int mk_maxChildCorridors = 3;
     
-    public string Id;
+    public Guid Id;
     public NodeType Type;
-    public List<string> ParentIds = new();
-    public List<string> ChildIds = new();
+    public List<Guid> ParentIds = new();
+    public List<Guid> ChildIds = new();
 
     public Rect Transform;
 
@@ -28,7 +28,7 @@ namespace Rogue.NodeGraph
 
     public Node(NodeType type, Rect transform)
     {
-      Id = Guid.NewGuid().ToString();
+      Id = Guid.NewGuid();
       Type = type;
       Transform = transform;
     }
