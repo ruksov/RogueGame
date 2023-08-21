@@ -15,7 +15,7 @@ namespace Rogue.NodeGraph.Editor
     private const float mk_arrowLength = 20;
     private const int mk_arrowAngle = 30;
 
-    private static RoomNodeGraph ms_graph;
+    private static RoomNodeGraphSO ms_graphSO;
     private static GUIStyle ms_nodeStyle;
     private static GUIStyle ms_selectedNodeStyle;
 
@@ -35,11 +35,11 @@ namespace Rogue.NodeGraph.Editor
     [OnOpenAsset]
     private static bool OnOpenAsset(int instanceId, int line)
     {
-      if(EditorUtility.InstanceIDToObject(instanceId) is not RoomNodeGraph graph)
+      if(EditorUtility.InstanceIDToObject(instanceId) is not RoomNodeGraphSO graph)
         return false;
 
       OpenWindow();
-      ms_graph = graph;
+      ms_graphSO = graph;
       return true;
     }
 
@@ -51,18 +51,18 @@ namespace Rogue.NodeGraph.Editor
 
     private void OnDestroy()
     {
-      if (ms_graph)
+      if (ms_graphSO)
       {
         ClearSelectedNodes();
         SaveGraph();
       }
 
-      ms_graph = null;
+      ms_graphSO = null;
     }
 
     private void OnGUI()
     {
-      if(ms_graph == null)
+      if(ms_graphSO == null)
         return;
 
       ProcessEvent(Event.current);
@@ -74,7 +74,7 @@ namespace Rogue.NodeGraph.Editor
 
     private void ClearSelectedNodes()
     {
-      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected)) 
+      foreach (Node node in ms_graphSO.Nodes.Where(node => node.IsSelected)) 
         node.IsSelected = false;
     }
 
@@ -104,10 +104,10 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DrawLinks()
     {
-      foreach (Node node in ms_graph.Nodes)
+      foreach (Node node in ms_graphSO.Nodes)
       {
         foreach (GUID childId in node.ChildIds)
-          DrawLink(node, ms_graph.IdToNode[childId]);
+          DrawLink(node, ms_graphSO.IdToNode[childId]);
       }
     }
 
@@ -132,7 +132,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DrawNodes()
     {
-      foreach (Node node in ms_graph.Nodes)
+      foreach (Node node in ms_graphSO.Nodes)
         node.Draw(node.IsSelected ? ms_selectedNodeStyle : ms_nodeStyle);
     }
 
@@ -146,7 +146,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static void ProcessLeftMouseDown(Vector2 mousePosition)
     {
-      Node hoveredNode = ms_graph.GetHoveredNode(mousePosition);
+      Node hoveredNode = ms_graphSO.GetHoveredNode(mousePosition);
       
       if(hoveredNode != null)
       {
@@ -161,7 +161,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static void ProcessRightMouseDown(Event currentEvent)
     {
-      Node hoveredNode = ms_graph.GetHoveredNode(currentEvent.mousePosition);
+      Node hoveredNode = ms_graphSO.GetHoveredNode(currentEvent.mousePosition);
       
       if(hoveredNode == null)
         ShowContextMenu(currentEvent.mousePosition);
@@ -213,7 +213,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DeselectAllNodes()
     {
-      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected))
+      foreach (Node node in ms_graphSO.Nodes.Where(node => node.IsSelected))
         node.IsSelected = false;
 
       GUI.changed = true;
@@ -221,20 +221,20 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DeleteSelectedNodes()
     {
-      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected))
+      foreach (Node node in ms_graphSO.Nodes.Where(node => node.IsSelected))
       {
         DeleteLinksFor(node);
-        ms_graph.IdToNode.Remove(node.Id);
+        ms_graphSO.IdToNode.Remove(node.Id);
       }
 
-      ms_graph.Nodes.RemoveAll(node => node.IsSelected);
+      ms_graphSO.Nodes.RemoveAll(node => node.IsSelected);
 
       GUI.changed = true;
     }
 
     private static void DeleteSelectedNodesLinks()
     {
-      foreach (Node node in ms_graph.Nodes.Where(node => node.IsSelected)) 
+      foreach (Node node in ms_graphSO.Nodes.Where(node => node.IsSelected)) 
         DeleteLinksFor(node);
 
       GUI.changed = true;
@@ -243,10 +243,10 @@ namespace Rogue.NodeGraph.Editor
     private static void DeleteLinksFor(Node node)
     {
       foreach (GUID parentId in node.ParentIds)
-        ms_graph.IdToNode[parentId].ChildIds.Remove(node.Id);
+        ms_graphSO.IdToNode[parentId].ChildIds.Remove(node.Id);
 
       foreach (GUID childId in node.ChildIds)
-        ms_graph.IdToNode[childId].ParentIds.Remove(node.Id);
+        ms_graphSO.IdToNode[childId].ParentIds.Remove(node.Id);
 
       node.ParentIds.Clear();
       node.ChildIds.Clear();
@@ -260,7 +260,7 @@ namespace Rogue.NodeGraph.Editor
 
     private static void StopDragLink()
     {
-      Node linkEndNode = ms_graph.GetHoveredNode(ms_dragLinkEndPosition);
+      Node linkEndNode = ms_graphSO.GetHoveredNode(ms_dragLinkEndPosition);
       if (linkEndNode != null) 
         CreateLink(ms_dragLinkStartNode, linkEndNode);
       
@@ -293,21 +293,21 @@ namespace Rogue.NodeGraph.Editor
     {
       var mousePosition = (Vector2) mousePositionObj;
 
-      if (ms_graph.Nodes.Count == 0) 
-        CreateRoomNode(NodeType.Entrance, mousePosition + Vector2.left * 300);
+      if (ms_graphSO.Nodes.Count == 0) 
+        CreateRoomNode(ENodeType.Entrance, mousePosition + Vector2.left * 300);
 
-      CreateRoomNode(NodeType.None, mousePosition);
+      CreateRoomNode(ENodeType.None, mousePosition);
     }
 
-    private static void CreateRoomNode(NodeType type, Vector2 position)
+    private static void CreateRoomNode(ENodeType type, Vector2 position)
     {
       var node = new Node(type, new Rect(position, ms_nodeSize));
-      ms_graph.AddNode(node);
+      ms_graphSO.AddNode(node);
     }
 
     private static void DeleteAllNodes()
     {
-      ms_graph.DeleteAllNodes();
+      ms_graphSO.DeleteAllNodes();
     }
 
     private static void CreateLink(Node linkStartNode, Node linkEndNode)
@@ -335,10 +335,10 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DragGraph(Event currentEvent)
     {
-      if (ms_graph.IsNodeHovered(currentEvent.mousePosition))
+      if (ms_graphSO.IsNodeHovered(currentEvent.mousePosition))
         return;
       
-      foreach (Node node in ms_graph.Nodes) 
+      foreach (Node node in ms_graphSO.Nodes) 
         node.Transform.position += currentEvent.delta;
 
       GUI.changed = true;
@@ -355,8 +355,8 @@ namespace Rogue.NodeGraph.Editor
 
     private static void SaveGraph()
     {
-      EditorUtility.SetDirty(ms_graph);
-      AssetDatabase.SaveAssetIfDirty(ms_graph);
+      EditorUtility.SetDirty(ms_graphSO);
+      AssetDatabase.SaveAssetIfDirty(ms_graphSO);
     }
 
     private static void DrawLine(Vector2 start, Vector2 end) =>

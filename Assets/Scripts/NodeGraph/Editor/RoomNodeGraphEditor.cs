@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Rogue.NodeGraph.Editor
 {
-  [CustomEditor(typeof(RoomNodeGraph))]
+  [CustomEditor(typeof(RoomNodeGraphSO))]
   public class RoomNodeGraphEditor : UnityEditor.Editor
   {
     public override void OnInspectorGUI()
@@ -12,7 +12,7 @@ namespace Rogue.NodeGraph.Editor
 
       if (GUILayout.Button("Regenerate IDs"))
       {
-        var graph = (RoomNodeGraph) target;
+        var graph = (RoomNodeGraphSO) target;
 
         graph.IdToNode.Clear();
         

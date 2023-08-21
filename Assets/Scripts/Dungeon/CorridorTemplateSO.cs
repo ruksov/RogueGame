@@ -9,6 +9,6 @@ namespace Rogue.Dungeon
     public ECorridorDir Direction;
 
     private void Reset() => 
-      Type = NodeType.Corridor;
+      Type = ENodeType.Corridor;
   }
 }

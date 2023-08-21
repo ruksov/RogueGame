@@ -44,9 +44,7 @@ namespace Rogue.Dungeon
 
         #endregion Tooltip
 
-        public RoomNodeTypeSO Type_Old;
-
-        public NodeType Type;
+        public ENodeType Type;
 
         #region Tooltip
 

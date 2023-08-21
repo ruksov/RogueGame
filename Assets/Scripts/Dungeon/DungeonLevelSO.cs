@@ -10,7 +10,7 @@ namespace Rogue.Dungeon
     {
         public string Name;
         public List<RoomTemplateSO> RoomTemplates;
-        public List<RoomNodeGraph> RoomNodeGraphs;
+        public List<RoomNodeGraphSO> RoomNodeGraphs;
 
 #if UNITY_EDITOR
 
@@ -23,7 +23,7 @@ namespace Rogue.Dungeon
                 return;
 
             // Loop through all node graphs
-            foreach (RoomNodeGraph graph in RoomNodeGraphs)
+            foreach (RoomNodeGraphSO graph in RoomNodeGraphs)
             {
                 // Loop through all nodes in node graph
                 foreach (Node roomNode in graph.Nodes)

@@ -1,6 +1,6 @@
 ﻿namespace Rogue.NodeGraph
 {
-  public enum NodeType
+  public enum ENodeType
   {
     None,
     Corridor,

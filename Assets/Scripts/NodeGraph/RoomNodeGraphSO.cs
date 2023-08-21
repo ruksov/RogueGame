@@ -1,71 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "RoomNodeGraph", menuName = "Scriptable Objects/Dungeon/Room Node Graph")]
-public class RoomNodeGraphSO : ScriptableObject
+namespace Rogue.NodeGraph
 {
-    [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
-    [FormerlySerializedAs("roomNodeList")] [HideInInspector] public List<RoomNodeSO> Nodes = new List<RoomNodeSO>();
-    [HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
-
-    private void Awake()
-    {
-        LoadRoomNodeDictionary();
-
-    }
-
-    /// <summary>
-    /// Load the room node dictionary from the room node list.
-    /// </summary>
-    private void LoadRoomNodeDictionary()
-    {
-        roomNodeDictionary.Clear();
-
-        // Populate dictionary
-        foreach (RoomNodeSO node in Nodes)
-        {
-            roomNodeDictionary[node.id] = node;
-        }
-    }
-
-    /// <summary>
-    /// Get room node by room nodeID
-    /// </summary>
-    public RoomNodeSO GetRoomNode(string roomNodeID)
-    {
-        if (roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode))
-        {
-            return roomNode;
-        }
-        return null;
-    }
-
-
-
-    #region Editor Code
-
-    // The following code should only run in the Unity Editor
+  [CreateAssetMenu(fileName = "RoomNodeGraph_", menuName = "Rogue/RoomNodeGraph")]
+  public class RoomNodeGraphSO : ScriptableObject, ISerializationCallbackReceiver
+  {
+    //[HideInInspector]
+    public List<Node> Nodes = new();
+    
+    public readonly Dictionary<GUID, Node> IdToNode = new();
+    
 #if UNITY_EDITOR
+    
+    public Node GetHoveredNode(Vector2 mousePosition) => 
+      Nodes.Find(node => node.Transform.Contains(mousePosition));
 
-    [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom = null;
-    [HideInInspector] public Vector2 linePosition;
-
-    // Repopulate node dictionary every time a change is made in the editor
-    public void OnValidate()
-    {
-        LoadRoomNodeDictionary();
-    }
-
-    public void SetNodeToDrawConnectionLineFrom(RoomNodeSO node, Vector2 position)
-    {
-        roomNodeToDrawLineFrom = node;
-        linePosition = position;
-    }
+    public bool IsNodeHovered(Vector2 mousePosition) => 
+      GetHoveredNode(mousePosition) != null;
 
 #endif
 
-    #endregion Editor Code
+    public void AddNode(Node node)
+    {
+      Nodes.Add(node);
+      IdToNode[node.Id] = node;
+    }    
+    
+    public void DeleteAllNodes()
+    {
+      IdToNode.Clear();
+      Nodes.Clear();
+    }
+    
+    public void OnBeforeSerialize()
+    {
+    }
 
+    public void OnAfterDeserialize()
+    {
+      foreach (Node node in Nodes) 
+        IdToNode[node.Id] = node;
+    }
+  }
 }

@@ -11,7 +11,7 @@ namespace Rogue.NodeGraph
   {
     private const int mk_maxChildCorridors = 3;
 
-    public NodeType Type;
+    public ENodeType Type;
 
     [NonSerialized] public GUID Id;
     [NonSerialized] public List<GUID> ParentIds = new();
@@ -27,11 +27,11 @@ namespace Rogue.NodeGraph
     [SerializeField] [HideInInspector] private string[] m_childIds;
 
     public Node(Rect transform) 
-      : this(NodeType.None, transform)
+      : this(ENodeType.None, transform)
     {
     }
 
-    public Node(NodeType type, Rect transform)
+    public Node(ENodeType type, Rect transform)
     {
       Id = GUID.Generate();
       Type = type;
@@ -41,9 +41,9 @@ namespace Rogue.NodeGraph
     public bool CanAddChild(Node child)
     {
       return Id != child.Id &&
-             Type != NodeType.None &&
-             child.Type != NodeType.None &&
-             child.Type != NodeType.Entrance &&
+             Type != ENodeType.None &&
+             child.Type != ENodeType.None &&
+             child.Type != ENodeType.Entrance &&
              !ChildIds.Contains(child.Id) &&
              !ParentIds.Contains(child.Id) &&
              CanBeParentFor(child);
@@ -51,8 +51,8 @@ namespace Rogue.NodeGraph
 
     private bool CanBeParentFor(Node child)
     {
-      return (Type == NodeType.Corridor && child.Type != NodeType.Corridor && ChildIds.Count == 0 && child.ParentIds.Count == 0) ||
-             (Type != NodeType.Corridor && child.Type == NodeType.Corridor && child.ParentIds.Count == 0 && ChildIds.Count < mk_maxChildCorridors);
+      return (Type == ENodeType.Corridor && child.Type != ENodeType.Corridor && ChildIds.Count == 0 && child.ParentIds.Count == 0) ||
+             (Type != ENodeType.Corridor && child.Type == ENodeType.Corridor && child.ParentIds.Count == 0 && ChildIds.Count < mk_maxChildCorridors);
     }
 
     public void AddChild(Node child)
@@ -65,11 +65,11 @@ namespace Rogue.NodeGraph
     {
       GUILayout.BeginArea(Transform, style);
       
-      if(Type == NodeType.Entrance || ParentIds.Count > 0)
+      if(Type == ENodeType.Entrance || ParentIds.Count > 0)
         EditorGUILayout.LabelField(Type.ToString());
       else
       {
-        var type = (NodeType) EditorGUILayout.EnumPopup(Type);
+        var type = (ENodeType) EditorGUILayout.EnumPopup(Type);
         
         if(Type != type)
           Type = type;
