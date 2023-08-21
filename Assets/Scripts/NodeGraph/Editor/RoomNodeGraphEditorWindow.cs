@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -6,7 +5,7 @@ using UnityEngine;
 
 namespace Rogue.NodeGraph.Editor
 {
-  public class RoomNodeGraphEditor_New : EditorWindow
+  public class RoomNodeGraphEditorWindow : EditorWindow
   {
     private static readonly Vector2 ms_nodeSize = new(160, 75);
     private const int mk_nodePadding = 25;
@@ -30,7 +29,7 @@ namespace Rogue.NodeGraph.Editor
     [MenuItem("Room Node Graph Editor", menuItem = "Tools/Room Node Graph Editor")]
     private static void OpenWindow()
     {
-      GetWindow<RoomNodeGraphEditor_New>("Room Node Graph Editor");
+      GetWindow<RoomNodeGraphEditorWindow>("Room Node Graph Editor");
     }
 
     [OnOpenAsset]
@@ -107,7 +106,7 @@ namespace Rogue.NodeGraph.Editor
     {
       foreach (Node node in ms_graph.Nodes)
       {
-        foreach (Guid childId in node.ChildIds)
+        foreach (GUID childId in node.ChildIds)
           DrawLink(node, ms_graph.IdToNode[childId]);
       }
     }
@@ -243,10 +242,10 @@ namespace Rogue.NodeGraph.Editor
 
     private static void DeleteLinksFor(Node node)
     {
-      foreach (Guid parentId in node.ParentIds)
+      foreach (GUID parentId in node.ParentIds)
         ms_graph.IdToNode[parentId].ChildIds.Remove(node.Id);
 
-      foreach (Guid childId in node.ChildIds)
+      foreach (GUID childId in node.ChildIds)
         ms_graph.IdToNode[childId].ParentIds.Remove(node.Id);
 
       node.ParentIds.Clear();

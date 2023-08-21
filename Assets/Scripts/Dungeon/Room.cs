@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Rogue.Dungeon;
 using UnityEngine;
 
 namespace Dungeon

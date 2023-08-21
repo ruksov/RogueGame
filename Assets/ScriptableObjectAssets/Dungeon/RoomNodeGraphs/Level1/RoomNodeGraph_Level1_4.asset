@@ -16,119 +16,202 @@ MonoBehaviour:
   - Type: 7
     Transform:
       serializedVersion: 2
-      x: 159
-      y: 418
+      x: 109
+      y: 332
       width: 160
       height: 75
+    m_id: 707bbd89dcfed425f86b8d175d227223
+    m_parentIds: []
+    m_childIds:
+    - dfd963558de2a4a61a57aeabd8f732f0
+    - 0f21ad8747003437c95cd3759a2bad65
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 367
-      y: 415
+      x: 317
+      y: 329
       width: 160
       height: 75
+    m_id: dfd963558de2a4a61a57aeabd8f732f0
+    m_parentIds:
+    - 707bbd89dcfed425f86b8d175d227223
+    m_childIds:
+    - a4ca09080527c4920a7cbdcaa5ce9cf5
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 158
-      y: 557
+      x: 108
+      y: 471
       width: 160
       height: 75
+    m_id: 0f21ad8747003437c95cd3759a2bad65
+    m_parentIds:
+    - 707bbd89dcfed425f86b8d175d227223
+    m_childIds:
+    - 4b26af100afb04fdeb3af7925ee76e3b
   - Type: 4
     Transform:
       serializedVersion: 2
-      x: 363
-      y: 301
+      x: 313
+      y: 215
       width: 160
       height: 75
+    m_id: a4ca09080527c4920a7cbdcaa5ce9cf5
+    m_parentIds:
+    - dfd963558de2a4a61a57aeabd8f732f0
+    m_childIds:
+    - 2aef71a40e11e48bc93dc49c6cc67e78
   - Type: 4
     Transform:
       serializedVersion: 2
-      x: 162
-      y: 700
+      x: 112
+      y: 614
       width: 160
       height: 75
+    m_id: 4b26af100afb04fdeb3af7925ee76e3b
+    m_parentIds:
+    - 0f21ad8747003437c95cd3759a2bad65
+    m_childIds: []
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 562
-      y: 303
+      x: 512
+      y: 217
       width: 160
       height: 75
+    m_id: 2aef71a40e11e48bc93dc49c6cc67e78
+    m_parentIds:
+    - a4ca09080527c4920a7cbdcaa5ce9cf5
+    m_childIds:
+    - 0dbec188b0a4d400484c392aa56db0a0
   - Type: 5
     Transform:
       serializedVersion: 2
-      x: 754
-      y: 301
+      x: 704
+      y: 215
       width: 160
       height: 75
+    m_id: 0dbec188b0a4d400484c392aa56db0a0
+    m_parentIds:
+    - 2aef71a40e11e48bc93dc49c6cc67e78
+    m_childIds:
+    - cfe9361764aec4c6ca430bc63dddadb6
+    - 62753237429cf44dcbc6e7c0dedd5c07
+    - 35835490353944e2fa2ee8e868ade9dc
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 748
-      y: 196
+      x: 698
+      y: 110
       width: 160
       height: 75
+    m_id: cfe9361764aec4c6ca430bc63dddadb6
+    m_parentIds:
+    - 0dbec188b0a4d400484c392aa56db0a0
+    m_childIds:
+    - 690da05d622f443289468547008da228
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 958
-      y: 304
+      x: 908
+      y: 218
       width: 160
       height: 75
+    m_id: 62753237429cf44dcbc6e7c0dedd5c07
+    m_parentIds:
+    - 0dbec188b0a4d400484c392aa56db0a0
+    m_childIds:
+    - 4de5da26667a847179f4863c0a735c4f
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 757
-      y: 415
+      x: 707
+      y: 329
       width: 160
       height: 75
+    m_id: 35835490353944e2fa2ee8e868ade9dc
+    m_parentIds:
+    - 0dbec188b0a4d400484c392aa56db0a0
+    m_childIds:
+    - a8bd076478d754348a2a7d488128af8d
   - Type: 4
     Transform:
       serializedVersion: 2
-      x: 739
-      y: 90
+      x: 689
+      y: 4
       width: 160
       height: 75
+    m_id: 690da05d622f443289468547008da228
+    m_parentIds:
+    - cfe9361764aec4c6ca430bc63dddadb6
+    m_childIds: []
   - Type: 5
     Transform:
       serializedVersion: 2
-      x: 1151
-      y: 305
+      x: 1101
+      y: 219
       width: 160
       height: 75
+    m_id: 4de5da26667a847179f4863c0a735c4f
+    m_parentIds:
+    - 62753237429cf44dcbc6e7c0dedd5c07
+    m_childIds:
+    - 23bbe771ec0aa448a80a49de0e137c19
   - Type: 2
     Transform:
       serializedVersion: 2
-      x: 758
-      y: 530
+      x: 708
+      y: 444
       width: 160
       height: 75
+    m_id: a8bd076478d754348a2a7d488128af8d
+    m_parentIds:
+    - 35835490353944e2fa2ee8e868ade9dc
+    m_childIds: []
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 1347
-      y: 309
+      x: 1297
+      y: 223
       width: 160
       height: 75
+    m_id: 23bbe771ec0aa448a80a49de0e137c19
+    m_parentIds:
+    - 4de5da26667a847179f4863c0a735c4f
+    m_childIds:
+    - 3154961fe5bec43ada3ba89efe2e0db5
   - Type: 4
     Transform:
       serializedVersion: 2
-      x: 1540
-      y: 306
+      x: 1490
+      y: 220
       width: 160
       height: 75
+    m_id: 3154961fe5bec43ada3ba89efe2e0db5
+    m_parentIds:
+    - 23bbe771ec0aa448a80a49de0e137c19
+    m_childIds:
+    - fe3ba4bfee5754d46ae3f3179e72c164
   - Type: 1
     Transform:
       serializedVersion: 2
-      x: 1546
-      y: 424
+      x: 1496
+      y: 338
       width: 160
       height: 75
+    m_id: fe3ba4bfee5754d46ae3f3179e72c164
+    m_parentIds:
+    - 3154961fe5bec43ada3ba89efe2e0db5
+    m_childIds:
+    - 0cf87f0f3e60d4f09b503659bc41b58b
   - Type: 3
     Transform:
       serializedVersion: 2
-      x: 1552
-      y: 547
+      x: 1502
+      y: 461
       width: 160
       height: 75
+    m_id: 0cf87f0f3e60d4f09b503659bc41b58b
+    m_parentIds:
+    - fe3ba4bfee5754d46ae3f3179e72c164
+    m_childIds: []

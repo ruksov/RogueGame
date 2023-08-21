@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
   m_Name: Room_ChestRoom_Catacombs_1
   m_EditorClassIdentifier: 
-  guid: 80dc858fbb5f82a4c823032e97cb0d34
   prefab: {fileID: 4327421925113694216, guid: 7e964e39befea5d47846f6a8a1dbb1ee, type: 3}
   previousPrefab: {fileID: 4327421925113694216, guid: 7e964e39befea5d47846f6a8a1dbb1ee, type: 3}
-  roomNodeType: {fileID: 11400000, guid: 3262b23e815cd4949b0e6d20b7ff5935, type: 2}
+  Type_Old: {fileID: 11400000, guid: 3262b23e815cd4949b0e6d20b7ff5935, type: 2}
+  Type: 2
   lowerBounds: {x: -1, y: 2}
   upperBounds: {x: 13, y: 22}
   doorwayList:

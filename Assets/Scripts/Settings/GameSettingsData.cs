@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Rogue.Dungeon;
 using UnityEngine;
 
 namespace Rogue.Settings

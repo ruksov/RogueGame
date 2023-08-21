@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace Rogue.NodeGraph
 {
   [Serializable]
-  public class Node
+  public class Node : ISerializationCallbackReceiver
   {
     private const int mk_maxChildCorridors = 3;
-    
-    public Guid Id;
+
     public NodeType Type;
-    public List<Guid> ParentIds = new();
-    public List<Guid> ChildIds = new();
+
+    [NonSerialized] public GUID Id;
+    [NonSerialized] public List<GUID> ParentIds = new();
+    [NonSerialized] public List<GUID> ChildIds = new();
 
     public Rect Transform;
 
-
     [NonSerialized]
     public bool IsSelected;
+
+    [SerializeField] [HideInInspector] private string m_id;
+    [SerializeField] [HideInInspector] private string[] m_parentIds;
+    [SerializeField] [HideInInspector] private string[] m_childIds;
 
     public Node(Rect transform) 
       : this(NodeType.None, transform)
@@ -28,7 +33,7 @@ namespace Rogue.NodeGraph
 
     public Node(NodeType type, Rect transform)
     {
-      Id = Guid.NewGuid();
+      Id = GUID.Generate();
       Type = type;
       Transform = transform;
     }
@@ -71,6 +76,20 @@ namespace Rogue.NodeGraph
       }
       
       GUILayout.EndArea();
+    }
+
+    public void OnBeforeSerialize()
+    {
+      m_id = Id.ToString();
+      m_parentIds = ParentIds?.Select(id => id.ToString()).ToArray();
+      m_childIds = ChildIds?.Select(id => id.ToString()).ToArray();
+    }
+
+    public void OnAfterDeserialize()
+    {
+      Id = new GUID(m_id);
+      ParentIds = m_parentIds?.Select(id => new GUID(id)).ToList();
+      ChildIds = m_childIds?.Select(id => new GUID(id)).ToList();
     }
   }
 }

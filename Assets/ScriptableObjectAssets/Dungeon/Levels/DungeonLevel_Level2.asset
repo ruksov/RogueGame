@@ -12,18 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574055aba7953414f879974262b78e0c, type: 3}
   m_Name: DungeonLevel_Level2
   m_EditorClassIdentifier: 
-  levelName: The Shadow Crypt
-  roomTemplateList:
+  Name: The Shadow Crypt
+  RoomTemplates:
   - {fileID: 11400000, guid: 3cdc996eae718644dad8dad24ae2c39f, type: 2}
   - {fileID: 11400000, guid: 03fb8e6e180566844b9c3942a093676e, type: 2}
   - {fileID: 11400000, guid: 5e10298487db4a548a9e425ea037c915, type: 2}
   - {fileID: 11400000, guid: 9927e94b574775f4c83d6ac8ef1a7ea1, type: 2}
-  - {fileID: 11400000, guid: 17aab39e60e31b44cbb99c260366f725, type: 2}
-  - {fileID: 11400000, guid: 75e9ed4d33bf76c439c799075b936c76, type: 2}
-  - {fileID: 11400000, guid: 58168ebb0df392f41b061a0c6b25da05, type: 2}
-  - {fileID: 11400000, guid: 74c9dcaed5ec2f949878a19a2067a840, type: 2}
-  - {fileID: 11400000, guid: 8560fcec9e5cd454aae62d7775c44da1, type: 2}
-  - {fileID: 11400000, guid: 1d5c4c4b7468b7749bced9ffcf6799be, type: 2}
   - {fileID: 11400000, guid: 5ec7c3fd29261984abd0f0a91400645d, type: 2}
   - {fileID: 11400000, guid: 162bb1ef7e418cb45b8a9972883291e2, type: 2}
   - {fileID: 11400000, guid: 441b01f46e3eeb442ade8694ca990dae, type: 2}
@@ -35,9 +29,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca3ebf2399132f74589db4539c90168f, type: 2}
   - {fileID: 11400000, guid: b497cf51860cc124088acdf3dfcc4bdc, type: 2}
   - {fileID: 11400000, guid: aeaa238dda2b934409291731e7646e39, type: 2}
-  roomNodeGraphList:
+  - {fileID: 11400000, guid: 4418bbcf9415244d5a43f89c14f784e6, type: 2}
+  - {fileID: 11400000, guid: 9f7860fb25abf484ebb581b63a7fcf91, type: 2}
+  - {fileID: 11400000, guid: ca6d499e4963744d68fe68d9cc52b026, type: 2}
+  - {fileID: 11400000, guid: 2dfa9853b4e7d489a8c7aa07dbc4f841, type: 2}
+  - {fileID: 11400000, guid: 1bcd3fe4ac76b43579ef9931caf8808c, type: 2}
+  - {fileID: 11400000, guid: 3a539af8824a0455a938351af18e6cd7, type: 2}
+  RoomNodeGraphs_Old:
   - {fileID: 11400000, guid: 7cb3cfbaec4e3fe4aa424c32df87086d, type: 2}
   - {fileID: 11400000, guid: a0f91df64bba0194b98766e3d7deeb67, type: 2}
   - {fileID: 11400000, guid: 9eb3c3dd50e3e5c428584aa5c112b663, type: 2}
   - {fileID: 11400000, guid: 3d8c9cc1e1beeae4389174924fc94d6b, type: 2}
   - {fileID: 11400000, guid: 00350a76e03e73e4384acbabb20c17de, type: 2}
+  RoomNodeGraphs:
+  - {fileID: 11400000, guid: 7f5b70ea590e84d958562f783d1f65a7, type: 2}
+  - {fileID: 11400000, guid: 31fe6acad57104b80b9fb420acae5f0e, type: 2}
+  - {fileID: 11400000, guid: b012e542078ed47548dbb414d930b4dc, type: 2}
+  - {fileID: 11400000, guid: 6263e4e12cbb14371b21641a1f0d54b2, type: 2}
+  - {fileID: 11400000, guid: 82e6cb367745244ceaf0b5dcd4df243b, type: 2}
