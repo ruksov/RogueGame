@@ -1,9 +1,12 @@
-﻿public enum Orientation
+﻿namespace Rogue.Enums
 {
-    north,
-    east,
-    south,
-    west,
-    none
+    public enum EOrientation
+    {
+        North,
+        East,
+        South,
+        West,
+        None
+    }
 }
 

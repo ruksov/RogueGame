@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
   m_Name: Room_BossRoom_Sorcery_2
   m_EditorClassIdentifier: 
+  m_id: 764e0c9dea49d4bce8637147cba6d155
   prefab: {fileID: 4969719553655747264, guid: d0d6c58f885e6a5478e9eb16743d11ce, type: 3}
   previousPrefab: {fileID: 4969719553655747264, guid: d0d6c58f885e6a5478e9eb16743d11ce, type: 3}
-  Type_Old: {fileID: 11400000, guid: e88b2f1db2464ad40828f246b16b427b, type: 2}
   Type: 3
   lowerBounds: {x: -13, y: -14}
   upperBounds: {x: 36, y: 29}

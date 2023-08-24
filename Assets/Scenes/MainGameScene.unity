@@ -273,6 +273,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   Settings: {fileID: 11400000, guid: 3e26081d5ca93404e8ba48b745301648, type: 2}
+  Resources: {fileID: 11400000, guid: 2f0910a3368944d64a6688b635d69b9a, type: 2}
 --- !u!4 &764689947
 Transform:
   m_ObjectHideFlags: 0
@@ -688,8 +689,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 0.99981207
+    width: 0.9980507
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

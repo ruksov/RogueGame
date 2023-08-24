@@ -1,7 +1,7 @@
 using Rogue.NodeGraph;
 using UnityEngine;
 
-namespace Rogue.Dungeon
+namespace Rogue.Dungeon.Data
 {
   [CreateAssetMenu(fileName = "Corridor_", menuName = "Rogue/RoomTemplates/Corridor")]
   public class CorridorTemplateSO : RoomTemplateSO

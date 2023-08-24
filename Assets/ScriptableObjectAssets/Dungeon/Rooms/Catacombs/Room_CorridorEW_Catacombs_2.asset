@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274e0b2f0f4446e58947d1875c8e9a32, type: 3}
   m_Name: Room_CorridorEW_Catacombs_2
   m_EditorClassIdentifier: 
+  m_id: 9e57920f7f6664ea8877e2a38e1ee4ed
   prefab: {fileID: 5351491626515514454, guid: d59543b753461aa4094dd4331eeda1ad, type: 3}
   previousPrefab: {fileID: 5351491626515514454, guid: d59543b753461aa4094dd4331eeda1ad, type: 3}
-  Type_Old: {fileID: 0}
   Type: 1
   lowerBounds: {x: 0, y: -3}
   upperBounds: {x: 16, y: 7}
