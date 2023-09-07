@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Rogue.Dungeon.Data;
@@ -7,11 +8,12 @@ using UnityEngine;
 
 namespace Rogue.Dungeon
 {
+  [Serializable]
   public class Room
   {
     public GUID Id;
     public RoomTemplateSO Template;
-    public RectInt GridTransform;
+    public RectInt WorldBounds;
     public List<GUID> ChildIds = new();
     public GUID ParentId;
     public List<Doorway> Doorways = new();
@@ -26,11 +28,5 @@ namespace Rogue.Dungeon
 
     public IEnumerable<Doorway> AvailableDoorways() =>
       Doorways.Where(doorway => !doorway.IsConnected);
-
-    public void InitDoorwaysPositions()
-    {
-      foreach (Doorway doorway in Doorways)
-        doorway.position = GridTransform.position + doorway.position - Template.lowerBounds;
-    }
   }
 }

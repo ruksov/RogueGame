@@ -90,7 +90,9 @@ namespace Rogue.Dungeon
     {
       foreach (Room room in m_rooms.Values)
       {
-        var roomObjectPosition = new Vector3(room.GridTransform.position.x - room.Template.lowerBounds.x, room.GridTransform.position.y - room.Template.lowerBounds.y);
+        var roomObjectPosition = new Vector3(
+          room.WorldBounds.position.x - room.Template.lowerBounds.x, 
+          room.WorldBounds.position.y - room.Template.lowerBounds.y);
         
         GameObject roomObject = Object.Instantiate(room.Template.prefab, roomObjectPosition, Quaternion.identity, m_rootTransform);
 
@@ -129,7 +131,7 @@ namespace Rogue.Dungeon
         Template = roomTemplateSO,
         ChildIds = roomNode.ChildIds.ToList(),
         ParentId = roomNode.ParentIds.Count == 0 ? new GUID() : roomNode.ParentIds[0],
-        GridTransform = new RectInt
+        WorldBounds = new RectInt
         {
           position = roomTemplateSO.lowerBounds,
           size = roomTemplateSO.upperBounds - roomTemplateSO.lowerBounds
@@ -157,24 +159,27 @@ namespace Rogue.Dungeon
 
         Room room = CreateRoomFromTemplate(roomTemplateSO, roomNode);
 
-        if (PlaceRoom(room, parentDoorway))
+        if (PlaceRoom(room, parentDoorway, parentRoom))
           return room;
       }
       
       return null;
     }
 
-    private bool PlaceRoom(Room room, Doorway parentDoorway)
+    private bool PlaceRoom(Room room, Doorway parentDoorway, Room parentRoom)
     {
       Doorway doorway = room.OppositeDoorway(parentDoorway);
 
       if (doorway == null)
         return false;
 
-      Vector2Int worldDoorwayPosition = parentDoorway.position + parentDoorway.orientation.Direction();
+      Vector2Int worldDoorwayPosition = 
+        parentRoom.WorldBounds.position 
+        - parentRoom.Template.lowerBounds 
+        + parentDoorway.position 
+        + parentDoorway.orientation.Direction();
       
-      room.GridTransform.position = worldDoorwayPosition + room.Template.lowerBounds - doorway.position;
-      room.GridTransform.size = room.Template.upperBounds - room.Template.lowerBounds;
+      room.WorldBounds.position = worldDoorwayPosition - doorway.position + room.Template.lowerBounds;
 
       if (OverlapWithRooms(room))
         return false;
@@ -185,12 +190,11 @@ namespace Rogue.Dungeon
     }
 
     private bool OverlapWithRooms(Room roomToTest) => 
-      m_rooms.Values.Any(room => room.GridTransform.Overlaps(roomToTest.GridTransform));
+      m_rooms.Values.Any(room => room.WorldBounds.Overlaps(roomToTest.WorldBounds));
 
     private void AddRoom(Room room)
     {
       room.IsPositioned = true;
-      room.InitDoorwaysPositions();
       m_rooms.Add(room.Id, room);
     }
 

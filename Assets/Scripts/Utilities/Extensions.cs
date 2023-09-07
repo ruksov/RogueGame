@@ -8,6 +8,9 @@ namespace Rogue.Utilities
 {
   public static class Extensions
   {
+    public static Vector3Int ToVector3Int(this Vector2Int v) => 
+      new(v.x, v.y);
+
     public static RectInt ToRectInt(this Rect rect) => 
       new((int)rect.xMin, (int)rect.xMax, (int)rect.width, (int)rect.height);
 
