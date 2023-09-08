@@ -4,6 +4,7 @@ using System.Linq;
 using GameManager;
 using Rogue.Dungeon;
 using Rogue.Dungeon.Data;
+using Rogue.Resources;
 using Rogue.Settings;
 using UnityEngine;
 using VContainer.Unity;
