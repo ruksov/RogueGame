@@ -3,7 +3,10 @@ namespace GameManager
   public enum EGameState
   {
     None,
-    GameStarted,
-    PlayingLevel
+    InitResources,
+    CreateDungeon,
+    CreatePlayer,
+    PlayingLevel,
+    Restart
   }
 }

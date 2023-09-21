@@ -39,6 +39,15 @@ namespace Rogue.Dungeon
       return dungeonBuildSuccess;
     }
 
+    public void ClearDungeon()
+    {
+      if (m_rootTransform == null)
+        return;
+      
+      Object.Destroy(m_rootTransform.gameObject);
+      m_rooms.Clear();
+    }
+
     private bool Build_Internal()
     {
       RoomNodeGraphSO graphSO = m_dungeonLevelSO.RandomGraph();
@@ -204,16 +213,10 @@ namespace Rogue.Dungeon
       m_rootTransform = root.transform;
     }
 
-    private void ClearDungeon()
-    {
-      if (m_rootTransform == null)
-        return;
-      
-      Object.Destroy(m_rootTransform.gameObject);
-      m_rooms.Clear();
-    }
-
     private bool TryGetParentRoom(Node roomNode, out Room parentRoom) => 
       m_rooms.TryGetValue(roomNode.ParentIds[0], out parentRoom);
+
+    public Room RoomOfType(ENodeType type) => 
+      m_rooms.First(pair => pair.Value.Template.Type == type).Value;
   }
 }

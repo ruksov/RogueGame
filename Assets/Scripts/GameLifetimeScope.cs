@@ -1,4 +1,5 @@
 using Rogue.Dungeon;
+using Rogue.Hero;
 using Rogue.Resources;
 using Rogue.Save;
 using Rogue.Settings;
@@ -20,6 +21,7 @@ namespace Rogue
       builder.RegisterInstance(Saves);
       
       builder.Register<DungeonBuilder>(Lifetime.Singleton);
+      builder.Register<HeroFactory>(Lifetime.Singleton);
       
       builder.RegisterEntryPoint<GameManager.GameManager>();
     }

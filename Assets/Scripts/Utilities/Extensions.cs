@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Rogue.Enums;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,6 +17,12 @@ namespace Rogue.Utilities
 
     public static T RandomItem<T>(this List<T> list) where T : class => 
       list.Count == 0 ? null : list[Random.Range(0, list.Count)];
+    
+    public static T RandomItem<T>(this T[] arr) where T : class => 
+      arr.Length == 0 ? null : arr[Random.Range(0, arr.Length)];
+
+    public static int RandomIndex<T>(this IEnumerable<T> enumerable) =>
+      Random.Range(0, enumerable.Count());
 
     public static T PopRandomItem<T>(this List<T> list) where T : class
     {
