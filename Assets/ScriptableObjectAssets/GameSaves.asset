@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSave:
     Name: 
-    Hero: {fileID: 0}
+    Hero: {fileID: 11400000, guid: 22d3d9ef61f6b48ce867fc435ed74942, type: 2}
