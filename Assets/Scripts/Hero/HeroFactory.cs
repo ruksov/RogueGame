@@ -5,14 +5,15 @@ namespace Rogue.Hero
 {
   public class HeroFactory
   {
-    public GameObject Create(HeroSO heroSO, Vector3 position)
+    public Hero Create(HeroSO heroSO, Vector3 position)
     {
       GameObject heroObject = Object.Instantiate(heroSO.Prefab);
-      
-      heroObject.GetComponent<Hero>().Init(heroSO);
+
+      var hero = heroObject.GetComponent<Hero>();
+      hero.Init(heroSO);
       heroObject.transform.position = position;
       
-      return heroObject;
+      return hero;
     }
   }
 }

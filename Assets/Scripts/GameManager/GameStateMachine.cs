@@ -4,34 +4,28 @@ using GameManager;
 using Rogue.Dungeon;
 using Rogue.Dungeon.Data;
 using Rogue.Hero;
-using Rogue.NodeGraph;
 using Rogue.Resources;
-using Rogue.Save;
 using Rogue.Settings;
 using UnityEngine;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 namespace Rogue.GameManager
 {
-  public class GameManager : IStartable, ITickable
+  public class GameStateMachine : IStartable, ITickable
   {
     private readonly DungeonBuilderSettings m_settings;
     private readonly List<DungeonLevelSO> m_levels;
     private readonly DungeonBuilder m_dungeonBuilder;
-    private readonly GameSavesSO m_saves;
+    private readonly HeroProvider m_heroProvider;
+
 
     [HideInInspector]
     public EGameState State = EGameState.None;
 
-    private readonly HeroFactory m_heroFactory;
-    private GameObject m_hero;
-
-    public GameManager(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, GameSavesSO saves, HeroFactory heroFactory)
+    public GameStateMachine(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, HeroProvider heroProvider)
     {
       m_dungeonBuilder = dungeonBuilder;
-      m_saves = saves;
-      m_heroFactory = heroFactory;
+      m_heroProvider = heroProvider;
       m_settings = settings.DungeonBuilderSettings;
       m_levels = resources.GameplayAssets.Levels;
     }
@@ -61,18 +55,17 @@ namespace Rogue.GameManager
           
         case EGameState.CreateDungeon:
           State = CreateDungeonLevel(m_settings.FirstLevelIndex) ? 
-            EGameState.CreatePlayer : 
+            EGameState.CreateHero : 
             EGameState.None;
-          
           break;
         
-        case EGameState.CreatePlayer:
-          m_hero = m_heroFactory.Create( m_saves.PlayerSave.Hero, InitSpawnPlayerPosition());
+        case EGameState.CreateHero:
+          m_heroProvider.CreateHero();
           State = EGameState.PlayingLevel;
           break;
         
         case EGameState.Restart:
-          Object.Destroy(m_hero);
+          m_heroProvider.DestroyHero();
           m_dungeonBuilder.ClearDungeon();
           
           State = EGameState.CreateDungeon;
@@ -97,8 +90,5 @@ namespace Rogue.GameManager
       Debug.LogError($"Failed to create dungeon {m_levels[levelIndex].name}");
       return false;
     }
-
-    private Vector3 InitSpawnPlayerPosition() => 
-      m_dungeonBuilder.RoomOfType(ENodeType.Entrance).RandomWorldSpawnPosition();
   }
 }

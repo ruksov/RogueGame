@@ -29,10 +29,10 @@ namespace Rogue.Dungeon
     public IEnumerable<Doorway> AvailableDoorways() =>
       Doorways.Where(doorway => !doorway.IsConnected);
 
-    public Vector3 RandomWorldSpawnPosition() => 
-      Instance.transform.position + RandomLocalSpawnPosition().ToVector3Int();
+    public Vector3 RandomWorldSpawnPosition() =>
+      Instance.Grid.GetCellCenterWorld(RandomSpawnGridCell().ToVector3Int());
 
-    private Vector2Int RandomLocalSpawnPosition() => 
-      Template.spawnPositionArray[Template.spawnPositionArray.RandomIndex()];
+    private Vector2Int RandomSpawnGridCell() => 
+      Template.SpawnGridCells[Template.SpawnGridCells.RandomIndex()];
   }
 }

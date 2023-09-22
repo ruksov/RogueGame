@@ -5,7 +5,7 @@ namespace GameManager
     None,
     InitResources,
     CreateDungeon,
-    CreatePlayer,
+    CreateHero,
     PlayingLevel,
     Restart
   }

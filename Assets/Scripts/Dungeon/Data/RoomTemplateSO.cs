@@ -81,12 +81,13 @@ namespace Rogue.Dungeon.Data
 
     #region Tooltip
 
+    [FormerlySerializedAs("spawnPositionArray")]
     [Tooltip(
       "Each possible spawn position (used for enemies and chests) for the room in tilemap coordinates should be added to this array")]
 
     #endregion Tooltip
 
-    public Vector2Int[] spawnPositionArray;
+    public Vector2Int[] SpawnGridCells;
 
     /// <summary>
     /// Returns the list of Entrances for the room template
@@ -114,7 +115,7 @@ namespace Rogue.Dungeon.Data
       HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
 
       // Check spawn positions populated
-      HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
+      HelperUtilities.ValidateCheckEnumerableValues(this, nameof(SpawnGridCells), SpawnGridCells);
     }
 
 #endif

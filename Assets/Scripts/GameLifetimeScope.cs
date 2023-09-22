@@ -23,7 +23,9 @@ namespace Rogue
       builder.Register<DungeonBuilder>(Lifetime.Singleton);
       builder.Register<HeroFactory>(Lifetime.Singleton);
       
-      builder.RegisterEntryPoint<GameManager.GameManager>();
+      builder.Register<HeroProvider>(Lifetime.Singleton);
+
+      builder.RegisterEntryPoint<GameManager.GameStateMachine>();
     }
   }
 }
