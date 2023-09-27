@@ -37,7 +37,7 @@ namespace Rogue.GameManager
     {
       HandleGameStates();
 
-      if (Input.GetKeyDown(KeyCode.R))
+      if (UnityEngine.Input.GetKeyDown(KeyCode.R))
         State = EGameState.Restart;
     }
       

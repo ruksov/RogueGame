@@ -1,5 +1,7 @@
 using Rogue.Player;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Rogue.Hero
 {

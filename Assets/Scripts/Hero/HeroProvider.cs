@@ -13,6 +13,8 @@ namespace Rogue.Hero
 
     public Action HeroCreated;
     public Action HeroDestroyed;
+
+    public bool IsHeroCreated => Hero != null;
     
     private readonly HeroFactory m_heroFactory;
     private readonly DungeonBuilder m_dungeonBuilder;
