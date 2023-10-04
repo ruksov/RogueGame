@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Rogue.Hero
+namespace Rogue.Hero.Components
 {
   public class Health : MonoBehaviour
   {

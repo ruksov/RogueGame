@@ -9,7 +9,7 @@ namespace Rogue.Hero
 {
   public class HeroProvider
   {
-    public Hero Hero;
+    public GameObject Hero;
 
     public Action HeroCreated;
     public Action HeroDestroyed;

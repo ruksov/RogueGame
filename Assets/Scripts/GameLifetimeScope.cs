@@ -26,8 +26,11 @@ namespace Rogue
       builder.Register<HeroFactory>(Lifetime.Singleton);
       builder.Register<HeroProvider>(Lifetime.Singleton);
 
+      builder.Register<InputService>(Lifetime.Singleton)
+        .AsImplementedInterfaces()
+        .AsSelf();
+      
       builder.RegisterEntryPoint<GameManager.GameStateMachine>();
-      builder.RegisterEntryPoint<InputService>();
     }
   }
 }

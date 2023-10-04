@@ -1,3 +1,4 @@
+using Rogue.Hero.Components;
 using Rogue.Player;
 using UnityEngine;
 using VContainer;
@@ -7,15 +8,21 @@ namespace Rogue.Hero
 {
   public class HeroFactory
   {
-    public Hero Create(HeroSO heroSO, Vector3 position)
-    {
-      GameObject heroObject = Object.Instantiate(heroSO.Prefab);
+    private readonly IObjectResolver m_container;
 
-      var hero = heroObject.GetComponent<Hero>();
-      hero.Init(heroSO);
+    public HeroFactory(IObjectResolver container)
+    {
+      m_container = container;
+    }
+
+    public GameObject Create(HeroSO heroSO, Vector3 position)
+    {
+      GameObject heroObject = m_container.Instantiate(heroSO.Prefab);
+
       heroObject.transform.position = position;
-      
-      return hero;
+      heroObject.GetComponent<Health>().SetDefaultHealth(heroSO.Health);
+
+      return heroObject;
     }
   }
 }

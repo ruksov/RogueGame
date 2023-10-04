@@ -76,5 +76,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Course Assets
-/Assets/CourseAssets
+/Assets/CourseAssets/*
 /Assets/CourseAssets.meta
+!/Assets/CourseAssets/Animation/
+!/Assets/CourseAssets/Animation.meta

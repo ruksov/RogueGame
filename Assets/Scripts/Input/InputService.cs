@@ -6,8 +6,9 @@ namespace Rogue.Input
 {
   public class InputService : ITickable
   {
-    public EAimDirection HeroAimDirection;
-    
+    public float AimAngle;
+    public EAimDirection AimDirection;
+
     private readonly HeroProvider m_heroProvider;
 
     public InputService(HeroProvider heroProvider)
@@ -40,7 +41,8 @@ namespace Rogue.Input
       if (!m_heroProvider.IsHeroCreated)
         return;
 
-      HeroAimDirection = (MouseWorldPosition() - m_heroProvider.Hero.transform.position).ToAimDirection();
+      AimAngle = (MouseWorldPosition() - m_heroProvider.Hero.transform.position).ToAngle2D();
+      AimDirection = AimAngle.ToAimDirection();
     }
   }
 }
