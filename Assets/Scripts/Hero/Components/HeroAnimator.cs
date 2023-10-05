@@ -1,4 +1,3 @@
-using System;
 using Rogue.Input;
 using UnityEngine;
 using VContainer;
@@ -9,15 +8,15 @@ namespace Rogue.Hero.Components
   {
     public Animator Animator;
     
-    private readonly int m_isIdleId = UnityEngine.Animator.StringToHash("isIdle");
-    private readonly int m_isMovingId = UnityEngine.Animator.StringToHash("isMoving");
+    private readonly int m_isIdleId = Animator.StringToHash("isIdle");
+    private readonly int m_isMovingId = Animator.StringToHash("isMoving");
     
-    private readonly int m_aimUpId = UnityEngine.Animator.StringToHash("aimUp");
-    private readonly int m_aimUpRightId = UnityEngine.Animator.StringToHash("aimUpRight");
-    private readonly int m_aimUpLeftId = UnityEngine.Animator.StringToHash("aimUpLeft");
-    private readonly int m_aimRightId = UnityEngine.Animator.StringToHash("aimRight");
-    private readonly int m_aimLeftId = UnityEngine.Animator.StringToHash("aimLeft");
-    private readonly int m_aimDownId = UnityEngine.Animator.StringToHash("aimDown");
+    private readonly int m_aimUpId = Animator.StringToHash("aimUp");
+    private readonly int m_aimUpRightId = Animator.StringToHash("aimUpRight");
+    private readonly int m_aimUpLeftId = Animator.StringToHash("aimUpLeft");
+    private readonly int m_aimRightId = Animator.StringToHash("aimRight");
+    private readonly int m_aimLeftId = Animator.StringToHash("aimLeft");
+    private readonly int m_aimDownId = Animator.StringToHash("aimDown");
     
     private InputService m_inputService;
 
@@ -25,22 +24,29 @@ namespace Rogue.Hero.Components
     public void Construct(InputService inputService)
     {
       m_inputService = inputService;
+      m_inputService.AimDirectionChanged += UpdateAimParams;
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-      StartIdling();
+      m_inputService.AimDirectionChanged -= UpdateAimParams;
     }
 
     private void Update()
     {
-      UpdateAimParams();
+      UpdateMovementParams();
     }
 
-    private void StartIdling()
+    private void UpdateMovementParams()
     {
-      Animator.SetBool(m_isMovingId, false);
-      Animator.SetBool(m_isIdleId, true);
+      Animator.SetBool(m_isMovingId, m_inputService.IsMoving);
+      Animator.SetBool(m_isIdleId, !m_inputService.IsMoving);
+    }
+
+    private void UpdateAimParams()
+    {
+      ClearAimParams();
+      SetAimParam(m_inputService.AimDirection, true);
     }
 
     private void ClearAimParams()
@@ -53,34 +59,32 @@ namespace Rogue.Hero.Components
       Animator.SetBool(m_aimDownId, false);
     }
 
-    private void UpdateAimParams()
+    private void SetAimParam(EAimDirection aimDirection, bool value)
     {
-      ClearAimParams();
-
-      switch (m_inputService.AimDirection)
+      switch (aimDirection)
       {
         case EAimDirection.Up:
-          Animator.SetBool(m_aimUpId, true);
+          Animator.SetBool(m_aimUpId, value);
           break;
 
         case EAimDirection.UpRight:
-          Animator.SetBool(m_aimUpRightId, true);
+          Animator.SetBool(m_aimUpRightId, value);
           break;
-        
+
         case EAimDirection.UpLeft:
-          Animator.SetBool(m_aimUpLeftId, true);
+          Animator.SetBool(m_aimUpLeftId, value);
           break;
 
         case EAimDirection.Right:
-          Animator.SetBool(m_aimRightId, true);
+          Animator.SetBool(m_aimRightId, value);
           break;
 
         case EAimDirection.Left:
-          Animator.SetBool(m_aimLeftId, true);
+          Animator.SetBool(m_aimLeftId, value);
           break;
 
         case EAimDirection.Down:
-          Animator.SetBool(m_aimDownId, true);
+          Animator.SetBool(m_aimDownId, value);
           break;
       }
     }

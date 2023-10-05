@@ -20,7 +20,7 @@ namespace Rogue.Hero
       GameObject heroObject = m_container.Instantiate(heroSO.Prefab);
 
       heroObject.transform.position = position;
-      heroObject.GetComponent<Health>().SetDefaultHealth(heroSO.Health);
+      heroObject.GetComponent<HeroHealth>().SetDefaultHealth(heroSO.Health);
 
       return heroObject;
     }

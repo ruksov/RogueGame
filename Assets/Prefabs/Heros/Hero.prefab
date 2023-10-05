@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536919301858458770}
   m_Layer: 18
-  m_Name: WeaponEffectPosition
+  m_Name: WeaponEffectPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,9 +124,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4886237443457582240}
-  - component: {fileID: -1628096263057047083}
   - component: {fileID: 7144840296495799137}
   - component: {fileID: 5821403668343942748}
+  - component: {fileID: 6221621304658316280}
   - component: {fileID: 4886237443457582242}
   - component: {fileID: 4886237443457582245}
   - component: {fileID: 4886237443457582244}
@@ -157,22 +157,6 @@ Transform:
   - {fileID: 6871094677741689121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1628096263057047083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4886237443457582251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac4035c597ed453d9801099442a21c82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HeroData: {fileID: 0}
-  Health: {fileID: 7144840296495799137}
-  SpriteRenderer: {fileID: 4886237443457582245}
-  Animator: {fileID: 4886237443457582244}
 --- !u!114 &7144840296495799137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +184,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 4886237443457582244}
+--- !u!114 &6221621304658316280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886237443457582251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fede1bf54e649d0b73abe117cd8d1b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponShootPoint: {fileID: 3258906655766401989}
+  WeaponRotationPoint: {fileID: 4886237445247908799}
 --- !u!210 &4886237443457582242
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -705,7 +703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3258906655766401989}
   m_Layer: 18
-  m_Name: WeaponShootPosition
+  m_Name: WeaponShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

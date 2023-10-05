@@ -1,3 +1,4 @@
+using System;
 using Rogue.Hero;
 using UnityEngine;
 using VContainer.Unity;
@@ -7,7 +8,13 @@ namespace Rogue.Input
   public class InputService : ITickable
   {
     public float AimAngle;
+    public Vector3 MouseWorldPosition;
     public EAimDirection AimDirection;
+
+    public Vector2 MoveInput;
+    public bool IsMoving => MoveInput.sqrMagnitude > 0;
+
+    public Action AimDirectionChanged;
 
     private readonly HeroProvider m_heroProvider;
 
@@ -16,7 +23,7 @@ namespace Rogue.Input
       m_heroProvider = heroProvider;
     }
 
-    private static Vector3 MouseWorldPosition()
+    private static Vector3 ComputeMouseWorldPosition()
     {
       if (!Camera.main)
         return Vector3.zero;
@@ -41,8 +48,17 @@ namespace Rogue.Input
       if (!m_heroProvider.IsHeroCreated)
         return;
 
-      AimAngle = (MouseWorldPosition() - m_heroProvider.Hero.transform.position).ToAngle2D();
-      AimDirection = AimAngle.ToAimDirection();
+      MouseWorldPosition = ComputeMouseWorldPosition();
+
+      EAimDirection newAimDirection = (MouseWorldPosition - m_heroProvider.Hero.transform.position)
+        .ToAngle2D()
+        .ToAimDirection();
+      
+      if (newAimDirection != AimDirection)
+      {
+        AimDirection = newAimDirection;
+        AimDirectionChanged?.Invoke();
+      }
     }
   }
 }
