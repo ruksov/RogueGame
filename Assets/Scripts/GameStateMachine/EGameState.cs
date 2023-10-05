@@ -1,4 +1,4 @@
-namespace GameManager
+namespace Rogue.GameStateMachine
 {
   public enum EGameState
   {

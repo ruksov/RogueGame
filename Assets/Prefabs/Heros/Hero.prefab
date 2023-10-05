@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 7144840296495799137}
   - component: {fileID: 5821403668343942748}
   - component: {fileID: 6221621304658316280}
+  - component: {fileID: 5806923013341518087}
   - component: {fileID: 4886237443457582242}
   - component: {fileID: 4886237443457582245}
   - component: {fileID: 4886237443457582244}
@@ -198,6 +199,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponShootPoint: {fileID: 3258906655766401989}
   WeaponRotationPoint: {fileID: 4886237445247908799}
+--- !u!114 &5806923013341518087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886237443457582251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 284c94cf7290410c8ffd09cbcd49568e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 4886237443457582249}
+  MoveSpeed: 0
 --- !u!210 &4886237443457582242
 SortingGroup:
   m_ObjectHideFlags: 0

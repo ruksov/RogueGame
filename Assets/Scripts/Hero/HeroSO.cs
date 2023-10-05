@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Rogue.Player
+namespace Rogue.Hero
 {
   [CreateAssetMenu(fileName = "Hero_", menuName = "Rogue/Player/Hero")]
   public class HeroSO : ScriptableObject
@@ -9,6 +9,7 @@ namespace Rogue.Player
     public GameObject Prefab;
     public RuntimeAnimatorController AnimatorController;
     public int Health;
+    public float MoveSpeed;
     public Sprite MinimapIcon;
     public Sprite HandSprite;
   }

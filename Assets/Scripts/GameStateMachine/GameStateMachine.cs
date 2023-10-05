@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using GameManager;
 using Rogue.Dungeon;
 using Rogue.Dungeon.Data;
 using Rogue.Hero;
+using Rogue.Input;
 using Rogue.Resources;
 using Rogue.Settings;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Rogue.GameManager
+namespace Rogue.GameStateMachine
 {
   public class GameStateMachine : IStartable, ITickable
   {
@@ -17,15 +17,17 @@ namespace Rogue.GameManager
     private readonly List<DungeonLevelSO> m_levels;
     private readonly DungeonBuilder m_dungeonBuilder;
     private readonly HeroProvider m_heroProvider;
+    private InputService m_inputService;
 
 
     [HideInInspector]
     public EGameState State = EGameState.None;
 
-    public GameStateMachine(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, HeroProvider heroProvider)
+    public GameStateMachine(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, HeroProvider heroProvider, InputService inputService)
     {
       m_dungeonBuilder = dungeonBuilder;
       m_heroProvider = heroProvider;
+      m_inputService = inputService;
       m_settings = settings.DungeonBuilderSettings;
       m_levels = resources.GameplayAssets.Levels;
     }
@@ -61,6 +63,8 @@ namespace Rogue.GameManager
         
         case EGameState.CreateHero:
           m_heroProvider.CreateHero();
+          m_inputService.EnableGameplayInput();
+          
           State = EGameState.PlayingLevel;
           break;
         

@@ -1,5 +1,4 @@
 using Rogue.Hero.Components;
-using Rogue.Player;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -20,7 +19,9 @@ namespace Rogue.Hero
       GameObject heroObject = m_container.Instantiate(heroSO.Prefab);
 
       heroObject.transform.position = position;
+      
       heroObject.GetComponent<HeroHealth>().SetDefaultHealth(heroSO.Health);
+      heroObject.GetComponent<HeroMove>().MoveSpeed = heroSO.MoveSpeed;
 
       return heroObject;
     }

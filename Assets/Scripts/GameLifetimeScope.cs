@@ -30,7 +30,7 @@ namespace Rogue
         .AsImplementedInterfaces()
         .AsSelf();
       
-      builder.RegisterEntryPoint<GameManager.GameStateMachine>();
+      builder.RegisterEntryPoint<GameStateMachine.GameStateMachine>();
     }
   }
 }
