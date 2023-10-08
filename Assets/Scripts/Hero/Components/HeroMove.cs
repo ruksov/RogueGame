@@ -6,9 +6,9 @@ namespace Rogue.Hero.Components
 {
   public class HeroMove : MonoBehaviour
   {
+    public float Speed;
     public Rigidbody2D Rigidbody;
-    public float MoveSpeed;
-    
+
     private InputService m_inputService;
 
     [Inject]
@@ -17,9 +17,9 @@ namespace Rogue.Hero.Components
       m_inputService = inputService;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-      Rigidbody.velocity = m_inputService.MoveInput * MoveSpeed;
+      Rigidbody.velocity = m_inputService.MoveInput * Speed;
     }
   }
 }

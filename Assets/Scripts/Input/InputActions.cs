@@ -46,6 +46,15 @@ namespace Rogue.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Roll"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d03ac12-9515-4440-a7de-5854251976bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,17 @@ namespace Rogue.Input
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a503f24-b4d3-4989-9b04-c1afcd209d9f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -124,6 +144,7 @@ namespace Rogue.Input
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+            m_Gameplay_Roll = m_Gameplay.FindAction("Roll", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -187,12 +208,14 @@ namespace Rogue.Input
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
         private readonly InputAction m_Gameplay_MousePosition;
         private readonly InputAction m_Gameplay_Move;
+        private readonly InputAction m_Gameplay_Roll;
         public struct GameplayActions
         {
             private @InputActions m_Wrapper;
             public GameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+            public InputAction @Roll => m_Wrapper.m_Gameplay_Roll;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -208,6 +231,9 @@ namespace Rogue.Input
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Roll.started += instance.OnRoll;
+                @Roll.performed += instance.OnRoll;
+                @Roll.canceled += instance.OnRoll;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -218,6 +244,9 @@ namespace Rogue.Input
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @Roll.started -= instance.OnRoll;
+                @Roll.performed -= instance.OnRoll;
+                @Roll.canceled -= instance.OnRoll;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -239,6 +268,7 @@ namespace Rogue.Input
         {
             void OnMousePosition(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
+            void OnRoll(InputAction.CallbackContext context);
         }
     }
 }

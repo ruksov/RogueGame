@@ -21,7 +21,7 @@ namespace Rogue.Hero
       heroObject.transform.position = position;
       
       heroObject.GetComponent<HeroHealth>().SetDefaultHealth(heroSO.Health);
-      heroObject.GetComponent<HeroMove>().MoveSpeed = heroSO.MoveSpeed;
+      heroObject.GetComponent<HeroMove>().Speed = heroSO.MoveSpeed;
 
       return heroObject;
     }

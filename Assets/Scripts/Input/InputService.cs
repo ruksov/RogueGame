@@ -14,6 +14,7 @@ namespace Rogue.Input
     public bool IsMoving => MoveInput.sqrMagnitude > 0;
 
     public Action AimDirectionChanged;
+    public Action RollPerformed;
 
     private readonly HeroProvider m_heroProvider;
     private readonly InputActions m_actions = new();
@@ -21,6 +22,8 @@ namespace Rogue.Input
     public InputService(HeroProvider heroProvider)
     {
       m_heroProvider = heroProvider;
+
+      m_actions.Gameplay.Roll.performed += _ => RollPerformed?.Invoke();
     }
 
     public void EnableGameplayInput()

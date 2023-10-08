@@ -7,6 +7,7 @@ namespace Rogue.Hero.Components
   public class HeroAnimator : MonoBehaviour
   {
     public Animator Animator;
+    public HeroRoll HeroRoll;
     
     private readonly int m_isIdleId = Animator.StringToHash("isIdle");
     private readonly int m_isMovingId = Animator.StringToHash("isMoving");
@@ -18,13 +19,20 @@ namespace Rogue.Hero.Components
     private readonly int m_aimLeftId = Animator.StringToHash("aimLeft");
     private readonly int m_aimDownId = Animator.StringToHash("aimDown");
     
+    private readonly int m_rollUpId = Animator.StringToHash("rollUp");
+    private readonly int m_rollDownId = Animator.StringToHash("rollDown");
+    private readonly int m_rollLeftId = Animator.StringToHash("rollLeft");
+    private readonly int m_rollRightId = Animator.StringToHash("rollRight");
+
     private InputService m_inputService;
 
     [Inject]
     public void Construct(InputService inputService)
     {
       m_inputService = inputService;
+      
       m_inputService.AimDirectionChanged += UpdateAimParams;
+      HeroRoll.IsRollingChanged += UpdateRollParams;
     }
 
     private void OnDestroy()
@@ -35,10 +43,42 @@ namespace Rogue.Hero.Components
     private void Update()
     {
       UpdateMovementParams();
+      UpdateRollParams();
+    }
+
+    private void UpdateRollParams()
+    {
+      ClearRollParams();
+
+      if (!HeroRoll.IsRolling)
+        return;
+      
+      Animator.SetBool(m_isIdleId, false);
+      Animator.SetBool(m_isMovingId, false);
+      
+      if(m_inputService.MoveInput == Vector2.up)
+        Animator.SetBool(m_rollUpId, true);
+      else if(m_inputService.MoveInput == Vector2.down)
+        Animator.SetBool(m_rollDownId, true);
+      else if(m_inputService.MoveInput == Vector2.left)
+        Animator.SetBool(m_rollLeftId, true);
+      else if(m_inputService.MoveInput == Vector2.right)
+        Animator.SetBool(m_rollRightId, true);
+    }
+
+    private void ClearRollParams()
+    {
+      Animator.SetBool(m_rollUpId, false);
+      Animator.SetBool(m_rollDownId, false);
+      Animator.SetBool(m_rollLeftId, false);
+      Animator.SetBool(m_rollRightId, false);
     }
 
     private void UpdateMovementParams()
     {
+      if (HeroRoll.IsRolling)
+        return;
+      
       Animator.SetBool(m_isMovingId, m_inputService.IsMoving);
       Animator.SetBool(m_isIdleId, !m_inputService.IsMoving);
     }

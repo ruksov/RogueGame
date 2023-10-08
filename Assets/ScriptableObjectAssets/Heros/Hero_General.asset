@@ -16,6 +16,6 @@ MonoBehaviour:
   Prefab: {fileID: 7441605640315235418, guid: 973947da19cc0447db0a009cc50d565b, type: 3}
   AnimatorController: {fileID: 9100000, guid: e87ce176a15556c459b355908992b930, type: 2}
   Health: 100
-  MoveSpeed: 8
+  MoveSpeed: 10
   MinimapIcon: {fileID: 21300000, guid: 709f49100a0267f419aa33d571fb9d25, type: 3}
   HandSprite: {fileID: 21300000, guid: a8c352369ed75924d84743672d1ab512, type: 3}
