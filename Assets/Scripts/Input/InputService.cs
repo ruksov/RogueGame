@@ -70,10 +70,10 @@ namespace Rogue.Input
 
     private static Vector3 ToWorldPosition(Vector2 screenPosition)
     {
-      if (!Camera.main)
+      if (!UnityEngine.Camera.main)
         return Vector3.zero;
 
-      Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+      Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(screenPosition);
       worldPosition.z = 0;
       return worldPosition;
     }
