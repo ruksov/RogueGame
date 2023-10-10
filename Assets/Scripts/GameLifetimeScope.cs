@@ -1,4 +1,5 @@
 using Rogue.Dungeon;
+using Rogue.Dungeon.Rooms;
 using Rogue.Hero;
 using Rogue.Input;
 using Rogue.Resources;
@@ -20,6 +21,9 @@ namespace Rogue
       builder.RegisterInstance(Settings);
       builder.RegisterInstance(Resources);
       builder.RegisterInstance(Saves);
+
+      builder.Register<RoomsContainer>(Lifetime.Singleton);
+      builder.Register<RoomFactory>(Lifetime.Singleton);
       
       builder.Register<DungeonBuilder>(Lifetime.Singleton);
       

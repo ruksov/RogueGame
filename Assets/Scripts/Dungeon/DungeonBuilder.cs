@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rogue.Dungeon.Data;
+using Rogue.Dungeon.Rooms;
 using Rogue.NodeGraph;
 using Rogue.Settings;
 using Rogue.Utilities;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Rogue.Dungeon
 {
@@ -15,13 +15,17 @@ namespace Rogue.Dungeon
     private const string mk_rootObjectName = "Dungeon";
     
     private readonly DungeonBuilderSettings m_builderSettings;
+    private readonly RoomFactory m_roomFactory;
+    private readonly RoomsContainer m_roomsContainer;
 
     private DungeonLevelSO m_dungeonLevelSO;
-    private Transform m_rootTransform;
-    private readonly Dictionary<GUID, Room> m_rooms = new();
 
-    public DungeonBuilder(GameSettingsSO settings) => 
+    public DungeonBuilder(GameSettingsSO settings, RoomFactory roomFactory, RoomsContainer roomsContainer)
+    {
+      m_roomFactory = roomFactory;
+      m_roomsContainer = roomsContainer;
       m_builderSettings = settings.DungeonBuilderSettings;
+    }
 
     public bool Build(DungeonLevelSO dungeonLevelSO)
     {
@@ -39,15 +43,6 @@ namespace Rogue.Dungeon
       return dungeonBuildSuccess;
     }
 
-    public void ClearDungeon()
-    {
-      if (m_rootTransform == null)
-        return;
-      
-      Object.Destroy(m_rootTransform.gameObject);
-      m_rooms.Clear();
-    }
-
     private bool Build_Internal()
     {
       RoomNodeGraphSO graphSO = m_dungeonLevelSO.RandomGraph();
@@ -56,8 +51,8 @@ namespace Rogue.Dungeon
       bool graphBuildSuccess = false;
       while (!graphBuildSuccess && graphBuildAttempts < m_builderSettings.MaxGraphBuildAttempts)
       {
-        ClearDungeon();
-        CreateRootObject();
+        m_roomsContainer.Clear();
+        m_roomsContainer.CreateRootObject();
         
         graphBuildSuccess = BuildGraph(graphSO);
         ++graphBuildAttempts;
@@ -97,18 +92,8 @@ namespace Rogue.Dungeon
 
     private void InstantiateRoomGameObjects()
     {
-      foreach (Room room in m_rooms.Values)
-      {
-        var roomObjectPosition = new Vector3(
-          room.WorldBounds.position.x - room.Template.lowerBounds.x, 
-          room.WorldBounds.position.y - room.Template.lowerBounds.y);
-        
-        GameObject roomObject = Object.Instantiate(room.Template.prefab, roomObjectPosition, Quaternion.identity, m_rootTransform);
-
-        var roomInstance = roomObject.GetComponent<RoomInstance>();
-        roomInstance.Initialize(room);
-        room.Instance = roomInstance;
-      }
+      foreach (Room room in m_roomsContainer.Rooms.Values) 
+        m_roomFactory.CreateRoomInstance(room, m_roomsContainer.RootTransform);
     }
 
     private bool CreateRoom(Node roomNode)
@@ -199,24 +184,18 @@ namespace Rogue.Dungeon
     }
 
     private bool OverlapWithRooms(Room roomToTest) => 
-      m_rooms.Values.Any(room => room.WorldBounds.Overlaps(roomToTest.WorldBounds));
+      m_roomsContainer.Rooms.Values.Any(room => room.WorldBounds.Overlaps(roomToTest.WorldBounds));
 
     private void AddRoom(Room room)
     {
       room.IsPositioned = true;
-      m_rooms.Add(room.Id, room);
-    }
-
-    private void CreateRootObject()
-    {
-      var root = new GameObject(mk_rootObjectName);
-      m_rootTransform = root.transform;
+      m_roomsContainer.Rooms.Add(room.Id, room);
     }
 
     private bool TryGetParentRoom(Node roomNode, out Room parentRoom) => 
-      m_rooms.TryGetValue(roomNode.ParentIds[0], out parentRoom);
+      m_roomsContainer.Rooms.TryGetValue(roomNode.ParentIds[0], out parentRoom);
 
     public Room RoomOfType(ENodeType type) => 
-      m_rooms.First(pair => pair.Value.Template.Type == type).Value;
+      m_roomsContainer.Rooms.First(pair => pair.Value.Template.Type == type).Value;
   }
 }

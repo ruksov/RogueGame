@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Rogue.Dungeon;
 using Rogue.Dungeon.Data;
+using Rogue.Dungeon.Rooms;
 using Rogue.Hero;
 using Rogue.Input;
+using Rogue.NodeGraph;
 using Rogue.Resources;
 using Rogue.Settings;
 using UnityEngine;
@@ -17,17 +19,19 @@ namespace Rogue.GameStateMachine
     private readonly List<DungeonLevelSO> m_levels;
     private readonly DungeonBuilder m_dungeonBuilder;
     private readonly HeroProvider m_heroProvider;
-    private InputService m_inputService;
+    private readonly InputService m_inputService;
+    private readonly RoomsContainer m_roomsContainer;
 
 
     [HideInInspector]
     public EGameState State = EGameState.None;
 
-    public GameStateMachine(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, HeroProvider heroProvider, InputService inputService)
+    public GameStateMachine(GameSettingsSO settings, GameResourcesSO resources, DungeonBuilder dungeonBuilder, HeroProvider heroProvider, InputService inputService, RoomsContainer roomsContainer)
     {
       m_dungeonBuilder = dungeonBuilder;
       m_heroProvider = heroProvider;
       m_inputService = inputService;
+      m_roomsContainer = roomsContainer;
       m_settings = settings.DungeonBuilderSettings;
       m_levels = resources.GameplayAssets.Levels;
     }
@@ -64,13 +68,14 @@ namespace Rogue.GameStateMachine
         case EGameState.CreateHero:
           m_heroProvider.CreateHero();
           m_inputService.EnableGameplayInput();
+          m_roomsContainer.SetCurrentRoom(m_roomsContainer.RoomOfType(ENodeType.Entrance));
           
           State = EGameState.PlayingLevel;
           break;
         
         case EGameState.Restart:
           m_heroProvider.DestroyHero();
-          m_dungeonBuilder.ClearDungeon();
+          m_roomsContainer.Clear();
           
           State = EGameState.CreateDungeon;
           break;
