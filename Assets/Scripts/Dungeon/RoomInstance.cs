@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rogue.Dungeon.Doors;
 using Rogue.Enums;
 using Rogue.NodeGraph;
 using Rogue.Utilities;
@@ -43,11 +43,16 @@ namespace Rogue.Dungeon
       if (Room.Template.Type == ENodeType.Corridor)
         return;
 
-      foreach (Doorway doorway in Room.Doorways.Where(doorway => doorway.IsConnected)) 
-        CreateDoor(doorway);
+      foreach (Doorway doorway in Room.Doorways.Where(doorway => doorway.IsConnected))
+      {
+        GameObject doorObject = CreateDoor(doorway);
+        
+        if(Room.Template.Type == ENodeType.BossRoom)
+          doorObject.GetComponent<DoorState>().Lock();
+      }
     }
 
-    private void CreateDoor(Doorway doorway) =>
+    private GameObject CreateDoor(Doorway doorway) =>
       Instantiate(doorway.doorPrefab, DoorWorldPosition(doorway), Quaternion.identity, transform);
 
     private Vector3 DoorWorldPosition(Doorway doorway) => 

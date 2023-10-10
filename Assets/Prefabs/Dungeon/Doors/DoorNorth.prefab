@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1721248404184691529}
   - component: {fileID: 3322700004619743748}
-  m_Layer: 0
-  m_Name: AnimationTrigger
+  - component: {fileID: 774741959032174173}
+  m_Layer: 21
+  m_Name: OpenTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +78,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &774741959032174173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035205934811515383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9408ebba01d48e4bf8dfd3d3ecd3b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collider: {fileID: 3322700004619743748}
+  OneShot: 1
 --- !u!1 &2362835327734003578
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +319,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4013341784042498276}
+  - component: {fileID: 177894749407752954}
+  - component: {fileID: 8602603050098046150}
   m_Layer: 0
   m_Name: DoorNorth
   m_TagString: Untagged
@@ -327,6 +344,36 @@ Transform:
   - {fileID: 2347462892145245793}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &177894749407752954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402451242864172303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182a749988124e9d9c3ab3deebdc2d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOpen: 0
+  IsLock: 0
+  OpenTrigger: {fileID: 774741959032174173}
+  LockCollider: {fileID: 4796744161230611236}
+--- !u!114 &8602603050098046150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402451242864172303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5f5ee577a4471cb5f9f2bb31c32c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DoorState: {fileID: 177894749407752954}
+  Animator: {fileID: 7752843863924237894}
 --- !u!1 &8525866719154671095
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +385,7 @@ GameObject:
   - component: {fileID: 6004708106467773767}
   - component: {fileID: 4796744161230611236}
   m_Layer: 13
-  m_Name: BlockHeroCollider
+  m_Name: LockCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

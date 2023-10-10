@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 2838243860859254260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.25, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3759528332652587292}
-  - component: {fileID: 781417352315022829}
+  - component: {fileID: 4519701659689684011}
   m_Layer: 0
   m_Name: DoorSprite
   m_TagString: Untagged
@@ -153,7 +153,7 @@ Transform:
   - {fileID: 9019471611738074173}
   m_Father: {fileID: 866611510361254862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &781417352315022829
+--- !u!95 &4519701659689684011
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -183,6 +183,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 635343205325646449}
+  - component: {fileID: 4125871248435040445}
+  - component: {fileID: 8043854038529774739}
   m_Layer: 0
   m_Name: DoorEast
   m_TagString: Untagged
@@ -206,6 +208,36 @@ Transform:
   - {fileID: 866611510361254862}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4125871248435040445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191227819976191769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182a749988124e9d9c3ab3deebdc2d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOpen: 0
+  IsLock: 0
+  OpenTrigger: {fileID: 5042571661765384823}
+  LockCollider: {fileID: 4449835540428413587}
+--- !u!114 &8043854038529774739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191227819976191769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5f5ee577a4471cb5f9f2bb31c32c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DoorState: {fileID: 4125871248435040445}
+  Animator: {fileID: 4519701659689684011}
 --- !u!1 &5558032071726251133
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +249,7 @@ GameObject:
   - component: {fileID: 1147486885475648018}
   - component: {fileID: 8937456495820532220}
   m_Layer: 12
-  m_Name: ShowDoorTrigger
+  m_Name: ShowTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,8 +325,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7638141666255149525}
   - component: {fileID: 8769562671359081693}
-  m_Layer: 0
-  m_Name: AnimationTrigger
+  - component: {fileID: 5042571661765384823}
+  m_Layer: 21
+  m_Name: OpenTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,6 +393,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 5.5}
   m_EdgeRadius: 0
+--- !u!114 &5042571661765384823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7416544713542430786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9408ebba01d48e4bf8dfd3d3ecd3b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collider: {fileID: 8769562671359081693}
+  OneShot: 1
 --- !u!1 &7559515722382965139
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +418,7 @@ GameObject:
   - component: {fileID: 6197648182946394110}
   - component: {fileID: 4449835540428413587}
   m_Layer: 13
-  m_Name: BlockHeroCollider
+  m_Name: LockCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
