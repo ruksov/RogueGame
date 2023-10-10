@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Rogue.Enums;
+using Rogue.NodeGraph;
 using Rogue.Utilities;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -30,9 +32,26 @@ namespace Rogue.Dungeon
       InitTilemaps(GetComponentsInChildren<Tilemap>());
 
       BlockUnconnectedDoorways();
+
+      CreateDoors();
       
       DisableCollisionTilemapRenderer();
     }
+
+    private void CreateDoors()
+    {
+      if (Room.Template.Type == ENodeType.Corridor)
+        return;
+
+      foreach (Doorway doorway in Room.Doorways.Where(doorway => doorway.IsConnected)) 
+        CreateDoor(doorway);
+    }
+
+    private void CreateDoor(Doorway doorway) =>
+      Instantiate(doorway.doorPrefab, DoorWorldPosition(doorway), Quaternion.identity, transform);
+
+    private Vector3 DoorWorldPosition(Doorway doorway) => 
+      Grid.GetCellCenterWorld(doorway.position.ToVector3Int());
 
     private void BlockUnconnectedDoorways()
     {
