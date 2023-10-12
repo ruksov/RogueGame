@@ -15,7 +15,7 @@ namespace Rogue.Dungeon.Rooms
     public Room CurrentRoom;
     public Action CurrentRoomChanged;
     
-    public Dictionary<GUID, Room> Rooms = new();
+    public readonly Dictionary<GUID, Room> Rooms = new();
     public Transform RootTransform;
     
     public void CreateRootObject()

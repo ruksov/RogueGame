@@ -8640,6 +8640,7 @@ GameObject:
   - component: {fileID: 3054645827938798965}
   - component: {fileID: 5476505636122767180}
   - component: {fileID: -3196114490204424757}
+  - component: {fileID: -4996642426618604119}
   m_Layer: 12
   m_Name: Entrance_Catacombs_1
   m_TagString: Untagged
@@ -8689,10 +8690,10 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -8721,6 +8722,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc715f1c83344e5a268dd13416c4862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Room:
+    Template: {fileID: 0}
+    WorldBounds:
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    ChildIds: []
+    Doorways: []
+    IsPositioned: 0
+    IsLit: 0
+    IsCleared: 0
+    IsVisited: 0
+    Instance: {fileID: 0}
   Grid: {fileID: 0}
   GroundTilemap: {fileID: 0}
   Decoration1Tilemap: {fileID: 0}
@@ -8729,7 +8744,20 @@ MonoBehaviour:
   CollisionTilemap: {fileID: 0}
   MinimapTilemap: {fileID: 0}
   Collider: {fileID: 0}
+  Tilemaps: []
   InitFromCode: 1
+--- !u!114 &-4996642426618604119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7224931148630070477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d92eeb783c24d098e144216446a61ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7423723252957058154
 GameObject:
   m_ObjectHideFlags: 0

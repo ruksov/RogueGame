@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using VContainer;
 
@@ -5,8 +6,7 @@ namespace Rogue.Dungeon.Rooms
 {
   public class CurrentRoomChanger : MonoBehaviour
   {
-    public RoomInstance RoomInstance;
-    
+    private RoomInstance m_roomInstance;
     private RoomsContainer m_roomsContainer;
 
     [Inject]
@@ -15,9 +15,12 @@ namespace Rogue.Dungeon.Rooms
       m_roomsContainer = roomsContainer;
     }
 
+    private void Awake() => 
+      m_roomInstance = GetComponent<RoomInstance>();
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-      m_roomsContainer.SetCurrentRoom(RoomInstance.Room);
+      m_roomsContainer.SetCurrentRoom(m_roomInstance.Room);
     }
   }
 }
