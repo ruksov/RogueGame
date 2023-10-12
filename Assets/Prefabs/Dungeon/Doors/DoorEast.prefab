@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: fd5ae752e16da36428c7ae98c49dc19e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 635343205325646449}
   - component: {fileID: 4125871248435040445}
   - component: {fileID: 8043854038529774739}
+  - component: {fileID: -4646802576221078221}
   m_Layer: 0
   m_Name: DoorEast
   m_TagString: Untagged
@@ -238,6 +239,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoorState: {fileID: 4125871248435040445}
   Animator: {fileID: 4519701659689684011}
+--- !u!114 &-4646802576221078221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191227819976191769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28769631ab684131967c4fa96a7f909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers:
+  - {fileID: 3977092905981653129}
+  - {fileID: 5625155512819308177}
+  FadeInTime: 0.5
 --- !u!1 &5558032071726251133
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1147486885475648018}
   - component: {fileID: 8937456495820532220}
-  m_Layer: 12
+  - component: {fileID: 4870127392378556289}
+  m_Layer: 21
   m_Name: ShowTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,10 +313,10 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -315,6 +333,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11, y: 5.5}
   m_EdgeRadius: 0
+--- !u!114 &4870127392378556289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5558032071726251133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502e449f9d8b4276bf2cb7e23aec56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeObject: {fileID: -4646802576221078221}
 --- !u!1 &7416544713542430786
 GameObject:
   m_ObjectHideFlags: 0

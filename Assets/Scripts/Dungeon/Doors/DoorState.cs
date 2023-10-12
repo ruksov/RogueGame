@@ -30,7 +30,7 @@ namespace Rogue.Dungeon.Doors
     {
       IsLock = true;
       IsOpen = false;
-      OpenTrigger.Disable();
+      OpenTrigger.Deactivate();
       LockCollider.enabled = true;
       StateChanged?.Invoke();
     }
@@ -38,7 +38,7 @@ namespace Rogue.Dungeon.Doors
     public void UnLock()
     {
       IsLock = false;
-      OpenTrigger.Enable();
+      OpenTrigger.Activate();
       LockCollider.enabled = false;
       StateChanged?.Invoke();
     }

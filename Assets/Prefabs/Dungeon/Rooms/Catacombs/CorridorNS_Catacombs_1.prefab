@@ -707,6 +707,8 @@ GameObject:
   - component: {fileID: 513896977482172229}
   - component: {fileID: 5568472831944296656}
   - component: {fileID: -417149026788870882}
+  - component: {fileID: -1742749059617956834}
+  - component: {fileID: 660272611525716171}
   m_Layer: 12
   m_Name: CorridorNS_Catacombs_1
   m_TagString: Untagged
@@ -812,6 +814,7 @@ MonoBehaviour:
   Collider: {fileID: 0}
   Tilemaps: []
   InitFromCode: 1
+  ShowRoom: {fileID: 0}
 --- !u!114 &-417149026788870882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,6 +827,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d92eeb783c24d098e144216446a61ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1742749059617956834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3415367689713843396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611ed0fa18d04a088979a503e7660a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomFade: {fileID: 0}
+--- !u!114 &660272611525716171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3415367689713843396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28769631ab684131967c4fa96a7f909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  FadeInTime: 0.5
 --- !u!1 &4038762777203532187
 GameObject:
   m_ObjectHideFlags: 0

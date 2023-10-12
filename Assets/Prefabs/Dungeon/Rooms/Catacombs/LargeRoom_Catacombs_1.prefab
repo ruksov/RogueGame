@@ -23486,6 +23486,8 @@ GameObject:
   - component: {fileID: 1462120759972737929}
   - component: {fileID: -853690836967553917}
   - component: {fileID: -1879242091731958705}
+  - component: {fileID: 5620024441831117806}
+  - component: {fileID: -7239716115561878351}
   m_Layer: 12
   m_Name: LargeRoom_Catacombs_1
   m_TagString: Untagged
@@ -23591,6 +23593,7 @@ MonoBehaviour:
   Collider: {fileID: 0}
   Tilemaps: []
   InitFromCode: 1
+  ShowRoom: {fileID: 0}
 --- !u!114 &-1879242091731958705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23603,6 +23606,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d92eeb783c24d098e144216446a61ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5620024441831117806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327421925113694216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611ed0fa18d04a088979a503e7660a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomFade: {fileID: 0}
+--- !u!114 &-7239716115561878351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327421925113694216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28769631ab684131967c4fa96a7f909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  FadeInTime: 0.5
 --- !u!1 &4561116449979205807
 GameObject:
   m_ObjectHideFlags: 0

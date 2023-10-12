@@ -243,8 +243,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4902412691440332467}
   - component: {fileID: 2633266370580487542}
-  m_Layer: 12
-  m_Name: ShowDoorTrigger
+  - component: {fileID: 3396864320442707812}
+  m_Layer: 21
+  m_Name: ShowTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,6 +311,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 9}
   m_EdgeRadius: 0
+--- !u!114 &3396864320442707812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3628432716316905708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502e449f9d8b4276bf2cb7e23aec56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeObject: {fileID: 3530205512601595271}
 --- !u!1 &5402451242864172303
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +335,7 @@ GameObject:
   - component: {fileID: 4013341784042498276}
   - component: {fileID: 177894749407752954}
   - component: {fileID: 8602603050098046150}
+  - component: {fileID: 3530205512601595271}
   m_Layer: 0
   m_Name: DoorNorth
   m_TagString: Untagged
@@ -374,6 +389,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoorState: {fileID: 177894749407752954}
   Animator: {fileID: 7752843863924237894}
+--- !u!114 &3530205512601595271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402451242864172303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28769631ab684131967c4fa96a7f909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers:
+  - {fileID: 244351503081875929}
+  FadeInTime: 0.5
 --- !u!1 &8525866719154671095
 GameObject:
   m_ObjectHideFlags: 0

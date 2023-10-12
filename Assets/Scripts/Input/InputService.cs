@@ -57,6 +57,9 @@ namespace Rogue.Input
 
     private void UpdateHeroAimDirection()
     {
+      if (!m_heroProvider.IsHeroCreated)
+        return;
+      
       EAimDirection newAimDirection = (MouseWorldPosition - m_heroProvider.Hero.transform.position)
         .ToAngle2D()
         .ToAimDirection();

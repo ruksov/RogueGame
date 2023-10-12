@@ -7724,6 +7724,8 @@ GameObject:
   - component: {fileID: 7061706898141806551}
   - component: {fileID: -9054466212085811246}
   - component: {fileID: 5939293446224334927}
+  - component: {fileID: -6930147971137302788}
+  - component: {fileID: -3555090644239368655}
   m_Layer: 12
   m_Name: CorridorEW_Catacombs_4
   m_TagString: Untagged
@@ -7829,6 +7831,7 @@ MonoBehaviour:
   Collider: {fileID: 0}
   Tilemaps: []
   InitFromCode: 1
+  ShowRoom: {fileID: 0}
 --- !u!114 &5939293446224334927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7841,6 +7844,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d92eeb783c24d098e144216446a61ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6930147971137302788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351491626515514454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611ed0fa18d04a088979a503e7660a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomFade: {fileID: 0}
+--- !u!114 &-3555090644239368655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351491626515514454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28769631ab684131967c4fa96a7f909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  FadeInTime: 0.5
 --- !u!1 &6714043297886329097
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,9 @@ using Rogue.Utilities;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Rogue.Dungeon
+namespace Rogue.Dungeon.Rooms
 {
+  [RequireComponent(typeof(ShowRoom))]
   public class RoomInstance : MonoBehaviour
   {
     public Room Room;
@@ -20,9 +21,9 @@ namespace Rogue.Dungeon
     public Tilemap CollisionTilemap;
     public Tilemap MinimapTilemap;
     public BoxCollider2D Collider;
-    public List<Tilemap> Tilemaps;
-
-    public bool InitFromCode;
+    
+    private readonly List<Tilemap> m_tilemaps = new();
+    private readonly List<GameObject> m_doors = new();
 
     public void Initialize(Room room)
     {
@@ -36,6 +37,22 @@ namespace Rogue.Dungeon
       CreateDoors();
       
       DisableCollisionTilemapRenderer();
+
+      InitShowRoom();
+    }
+
+    private void InitShowRoom()
+    {
+      ShowRoom showRoom = GetComponent<ShowRoom>();
+
+      IEnumerable<TilemapRenderer> tilemapRenderers = m_tilemaps.Select(t => t.GetComponent<TilemapRenderer>());
+      
+      IEnumerable<FadeObject> doorFades = new List<FadeObject>();
+      
+      if (Room.Template.Type != ENodeType.Corridor)
+        doorFades = m_doors.Select(d => d.GetComponent<FadeObject>());
+      
+      showRoom.Init(tilemapRenderers, doorFades);
     }
 
     private void CreateDoors()
@@ -49,6 +66,8 @@ namespace Rogue.Dungeon
         
         if(Room.Template.Type == ENodeType.BossRoom)
           doorObject.GetComponent<DoorState>().Lock();
+        
+        m_doors.Add(doorObject);
       }
     }
 
@@ -62,7 +81,7 @@ namespace Rogue.Dungeon
     {
       foreach (Doorway doorway in Room.Doorways.Where(d => !d.IsConnected))
       {
-        foreach (Tilemap tilemap in Tilemaps) 
+        foreach (Tilemap tilemap in m_tilemaps) 
           BlockDoorwayOnTilemap(tilemap, doorway);
       }
     }
@@ -125,7 +144,7 @@ namespace Rogue.Dungeon
     {
       foreach (Tilemap tilemap in tilemaps)
       {
-        Tilemaps.Add(tilemap);
+        m_tilemaps.Add(tilemap);
         
         if (tilemap.CompareTag("groundTilemap"))
           GroundTilemap = tilemap;
@@ -140,7 +159,7 @@ namespace Rogue.Dungeon
         else if (tilemap.CompareTag("minimapTilemap"))
           MinimapTilemap = tilemap;
         else
-          Tilemaps.RemoveAt(Tilemaps.Count - 1);
+          m_tilemaps.RemoveAt(m_tilemaps.Count - 1);
       }
     }
 

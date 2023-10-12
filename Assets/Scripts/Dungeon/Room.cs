@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Rogue.Dungeon.Data;
+using Rogue.Dungeon.Rooms;
 using Rogue.Utilities;
 using UnityEditor;
 using UnityEngine;

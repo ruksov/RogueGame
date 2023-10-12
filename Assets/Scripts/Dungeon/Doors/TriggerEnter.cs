@@ -11,12 +11,12 @@ namespace Rogue.Dungeon.Doors
     public Action<Collider2D> Triggered;
 
     public void Reset() =>
-      Enable();
+      Activate();
 
-    public void Enable() =>
+    public void Activate() =>
       Collider.enabled = true;
 
-    public void Disable() =>
+    public void Deactivate() =>
       Collider.enabled = false;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +24,7 @@ namespace Rogue.Dungeon.Doors
       Triggered?.Invoke(other);
       
       if(OneShot)
-        Disable();
+        Deactivate();
     }
   }
 }
